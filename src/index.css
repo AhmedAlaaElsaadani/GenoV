@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Baumans&display=swap');
+:root{
+    --primary-color: #F1AB32;
+    --navbarPrimColor: #F1AB32;
+    --form-prim-color:#363636;
+    --blackToWhite: #F1F1F1;
+    --whiteToBlack: #1A1A1A;
+    --secondary-color: #ffcc5c;
+    --tertiary-color: #ffeead;
+    --quaternary-color: #d1e8e2;
+    --quinary-color: #aab7b8;
+}
+body{
+       font-family: "Baumans", system-ui;
+        font-weight: 400;    
+}
+
+button{
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+button:hover{
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+button:active{
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+}
+::selection{
+    background-color: var(--primary-color);
+    color: white;
+}
