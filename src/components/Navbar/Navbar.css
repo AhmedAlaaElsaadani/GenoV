@@ -1,152 +1,147 @@
 .homeNavbarTransparent {
-    background-color: transparent;
-    /* width: 100%; */
-    /* color: white !important; */
-    transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  /* width: 100%; */
+  /* color: white !important; */
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
 }
 
 .homeNavbarTransparent a {
-    color: white !important;
+  color: white !important;
 }
 
 .homeNavbarTransparent #darkmode {
-    color: white !important;
-
+  color: white !important;
 }
 
 .backgroundMainNavbar {
-    background-color: var(--navbarPrimColor);
-    transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
+  background-color: var(--navbarPrimColor);
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
 }
 
 .backgroundMainNavbar a {
-    color: var(--blackToWhite) !important;
+  color: var(--blackToWhite) !important;
 }
 
 .navbar-brand {
-    margin-top:-10px;
+  margin-top: -10px;
 }
 
 nav a {
-    /* color: white  !important; */
-    cursor: pointer;
-    text-decoration: none;
-    -moz-text-decoration: none;
-    -webkit-text-decoration: none;
-    transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-
+  /* color: white  !important; */
+  cursor: pointer;
+  text-decoration: none;
+  -moz-text-decoration: none;
+  -webkit-text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
 }
 
 .navbar-nav .nav-link:focus,
 .navbar-nav .nav-link:hover {
-    outline: none !important;
+  outline: none !important;
 }
 
 .listsNavLinks {
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .listsNavLinks ul {
-    align-items: center;
+  align-items: center;
 }
 
-
 .selectedNavElement {
-    font-weight: bolder !important;
-    text-decoration: underline !important;
-    -moz-text-decoration: underline !important;
-    -webkit-text-decoration: underline !important;
+  font-weight: bolder !important;
+  text-decoration: underline !important;
+  -moz-text-decoration: underline !important;
+  -webkit-text-decoration: underline !important;
 }
 
 a.selectedNavElement {
-    color: var(--navbarPrimColor) !important;
-
+  color: var(--navbarPrimColor) !important;
+}
+.backgroundMainNavbar a.selectedNavElement{
+    color: white !important;
 }
 
 .nav-link {
-    transition: all 0.3s ease-in-out !important;
-    -webkit-transition: all 0.3s ease-in-out !important;
-    -moz-transition: all 0.3s ease-in-out !important;
-    -ms-transition: all 0.3s ease-in-out !important;
-    -o-transition: all 0.3s ease-in-out !important;
+  transition: all 0.3s ease-in-out !important;
+  -webkit-transition: all 0.3s ease-in-out !important;
+  -moz-transition: all 0.3s ease-in-out !important;
+  -ms-transition: all 0.3s ease-in-out !important;
+  -o-transition: all 0.3s ease-in-out !important;
 }
 
 .nav-link:hover {
-    color: var(--navbarPrimColor) !important;
-    font-weight: bolder !important;
-    text-decoration: underline !important;
-    -moz-text-decoration: underline !important;
-    -webkit-text-decoration: underline !important;
-
+  color: var(--navbarPrimColor) !important;
+  font-weight: bolder !important;
+  text-decoration: underline !important;
+  -moz-text-decoration: underline !important;
+  -webkit-text-decoration: underline !important;
+}
+.backgroundMainNavbar .nav-link:hover{
+    color: white !important;
 }
 
 /* unset hover dropdown */
 .dropdown-item:hover {
-    background-color: unset !important;
+  background-color: unset !important;
 }
 
-a:active {
-    scale: 1.1;
+nav a:active {
+  scale: 1.1;
 }
 
 .bg-responsiveTransparentAndPrimColorWhenPhone {
-    background-color: transparent !important;
+  background-color: transparent !important;
 }
 
-
 @media (max-width: 991px) {
-    .listsNavLinks ul {
-        width: 100%;
-    }
+  .listsNavLinks ul {
+    width: 100%;
+  }
 
-    .listsNavLinks {
-
-        flex-wrap: wrap;
-    }
-
-
+  .listsNavLinks {
+    flex-wrap: wrap;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .bg-responsiveTransparentAndPrimColorWhenPhone {
-        background-color: var(--navbarPrimTextColor) !important;
-    }
+  .bg-responsiveTransparentAndPrimColorWhenPhone {
+    background-color: var(--navbarPrimTextColor) !important;
+  }
 
-    .selectedNavElement {
-        color: white !important;
-        font-weight: bolder !important;
-        text-decoration: underline !important;
-        -moz-text-decoration: underline !important;
-        -webkit-text-decoration: underline !important;
-    }
+  .selectedNavElement {
+    color: white !important;
+    font-weight: bolder !important;
+    text-decoration: underline !important;
+    -moz-text-decoration: underline !important;
+    -webkit-text-decoration: underline !important;
+  }
 
-    /* set all children elements of navbar to white */
-    .bg-responsiveTransparentAndPrimColorWhenPhone a {
-        color: white;
-    }
-    .navbar-button {
-        color: white;
-    }
+  /* set all children elements of navbar to white */
+  .bg-responsiveTransparentAndPrimColorWhenPhone a {
+    color: white;
+  }
+  .navbar-button {
+    color: white;
+  }
 
-    .navbar-button:hover::before {
-        background-color: white;
-        /* Set your desired hover color */
-    }
-
-
+  .navbar-button:hover::before {
+    background-color: white;
+    /* Set your desired hover color */
+  }
 }

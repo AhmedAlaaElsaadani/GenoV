@@ -2,9 +2,9 @@
 :root{
     --primary-color: #F1AB32;
     --navbarPrimColor: #F1AB32;
-    --form-prim-color:#363636;
-    --blackToWhite: #F1F1F1;
-    --whiteToBlack: #1A1A1A;
+    --form-prim-color:  #363636c7;
+    --blackToWhite: #1E1E1E;
+    --whiteToBlack: #f1f1f1;
     --secondary-color: #ffcc5c;
     --tertiary-color: #ffeead;
     --quaternary-color: #d1e8e2;
@@ -29,13 +29,33 @@ button{
     -o-transition: all 0.3s ease;
 }
 button:hover{
+    transform: scale(1.03);
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    -o-transform: scale(1.03);
+}
+button:active{
+    transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+}
+/* because i use sometimes liknks like buttons */
+.linkNav:hover{
+    transition: all 0.3s ease;
     transform: scale(1.1);
     -webkit-transform: scale(1.1);
     -moz-transform: scale(1.1);
     -ms-transform: scale(1.1);
     -o-transform: scale(1.1);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
 }
-button:active{
+.linkNav:active{
     transform: scale(0.9);
     -webkit-transform: scale(0.9);
     -moz-transform: scale(0.9);

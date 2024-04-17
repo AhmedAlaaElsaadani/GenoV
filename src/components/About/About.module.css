@@ -1,0 +1,34 @@
+.About{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../Images/FormBackground.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.About .layer{
+    background-color: rgba(0, 0, 0, 0.65);
+    min-height: calc(100vh);
+    padding:150px 0px 0px 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
+.About .layer .bgText{
+    color: var(--whiteToBlack);
+    background-color: #f1ab3283;
+    font-size: 1.7rem;
+    font-weight: 800;
+    letter-spacing: 0.01rem;
+    text-align: start;
+    line-height: 2rem;
+    padding: 12px;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}

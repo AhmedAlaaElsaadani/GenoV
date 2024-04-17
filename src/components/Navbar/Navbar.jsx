@@ -26,7 +26,7 @@ const Navbar = () => {
       if (element !== e.target) {
         element.classList.remove("selectedNavElement");
       }
-    }); 
+    });
     hideNavbar();
   };
   const hideNavbar = () => {
@@ -88,7 +88,11 @@ const Navbar = () => {
         >
           <Link className="navbar-brand py-3 px-2 rounded-3" to="/">
             <img
-              src="Images/Logo.png"
+              src={
+                scrolled && HomeFlag
+                  ? "Images/Logo.png"
+                  : "Images/Logo White.png"
+              }
               style={{ width: "125px" }}
               alt="logo website "
             />
@@ -130,18 +134,18 @@ const Navbar = () => {
                   About
                 </Link>
               </li>
-              
+
               <li className="nav-item ">
                 <Link
                   className="nav-link active"
                   aria_current="About"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
-                  to="/About"
+                  to="/Docs"
                 >
                   Docs
                 </Link>
               </li>
-              
+
               <li className="nav-item ">
                 <Link
                   className="nav-link active"
@@ -174,26 +178,26 @@ const Navbar = () => {
               </li>
             </ul>
             <ul className="navbar-nav gap-3 gap-lg-3  d-flex justify-content-between mb-2 mb-lg-0">
-                <li className="nav-item">
-                    <Link
-                    className="nav-link active"
-                    aria_current="Login"
-                    onClick={(e) => changeStyleClassFotNavItem(e)}
-                    to="/forms/Login"
-                    >
-                    Login
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link
-                    className="nav-link active"
-                    aria_current="Register"
-                    onClick={(e) => changeStyleClassFotNavItem(e)}
-                    to="/forms/Register"
-                    >
-                    Register
-                    </Link>
-                </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  aria_current="Login"
+                  onClick={(e) => changeStyleClassFotNavItem(e)}
+                  to="/forms/Login"
+                >
+                  Login
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  aria_current="Register"
+                  onClick={(e) => changeStyleClassFotNavItem(e)}
+                  to="/forms/Register"
+                >
+                  Register
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
