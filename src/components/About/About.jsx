@@ -3,7 +3,6 @@ import style from "./About.module.css";
 export default function About() {
   return (
     <section className={style.About}>
-      <div className={style.layer}>
         <div className="container g-2">
           <div className="row ">
             <div className={"col-md-6 "}>
@@ -29,7 +28,6 @@ export default function About() {
               <img src="Images/About.png" className="w-100 h-100" alt="cartoon scientist Image " />
             </div>
           </div>
-        </div>
       </div>
     </section>
   );

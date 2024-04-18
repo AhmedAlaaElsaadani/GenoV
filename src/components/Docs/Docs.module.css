@@ -1,23 +1,5 @@
-.Docs{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url("../Images/FormBackground.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-}
 
-.Docs .layer{
-    background-color: rgba(0, 0, 0, 0.65);
-    min-height: calc(100vh);
-    padding:150px 0px 0px 0px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}   
-.Docs .layer .bgText{
+.Docs  .bgText{
     color: var(--whiteToBlack);
     background-color: #f1ab3283;
     font-size: 1.7rem;

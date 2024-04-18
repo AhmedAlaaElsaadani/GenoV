@@ -6,6 +6,7 @@ import About from './components/About/About';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Docs from './components/Docs/Docs';
+import CommonBackground from './components/CommonBackgroundLayer/CommonBackground';
 
 function App() {
   let router = createBrowserRouter(
@@ -15,8 +16,8 @@ function App() {
       children:[
         {index:true, element: <Hero/>},
         {path:"home", element:<Hero/>},
-        {path:"about", element:<About/>},
-        {path:"Docs",element:<Docs/>}
+        {path:"about", element:<CommonBackground><About/></CommonBackground>},
+        {path:"Docs",element:<CommonBackground><Docs/></CommonBackground>}
       ]
     }
     ,{

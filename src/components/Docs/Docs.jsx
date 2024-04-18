@@ -4,7 +4,6 @@ import style from "./Docs.module.css";
 export default function Docs() {
   return (
     <section className={style.Docs}>
-      <div className={style.layer}>
         <div className="container g-2">
           <div className="row ">
             <div className=" col-md-6">
@@ -40,7 +39,6 @@ export default function Docs() {
             </div>
           </div>
         </div>
-      </div>
     </section>
   );
 }
