@@ -1,0 +1,23 @@
+footer{
+    width: 100%;
+    padding: 20px 0px;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 12px;
+    transform: translateY(50%);
+    -webkit-transform: translateY(50%);
+    -moz-transform: translateY(50%);
+    -ms-transform: translateY(50%);
+    -o-transform: translateY(50%);
+}
+footer a{
+    color:var(--footer-text-color) ;
+    text-decoration: none;
+}
+footer a span{
+    color: var(--span-color)!important;
+
+}
+.selectedFooter{
+    color: var(--primary-color);
+}

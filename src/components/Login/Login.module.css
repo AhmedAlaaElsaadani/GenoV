@@ -19,7 +19,7 @@
     letter-spacing: 0.1rem;
 }
 .Login p span{
-    color: #F4682D;
+    color: var(--span-color);
 }
 .Login form button{
     background-color: var(--primary-color);

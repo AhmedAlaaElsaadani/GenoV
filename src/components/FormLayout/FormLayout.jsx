@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./FormLayout.module.css";
 import { Outlet } from "react-router-dom";
+import Footer from "../Footer/Footer";
 export default function FormLayout() {
   return (
     <section
@@ -10,8 +11,9 @@ export default function FormLayout() {
       }
     >
       <div className={style.layer}>
-<Outlet/>
+        <Outlet />
       </div>
+      <Footer/>
     </section>
   );
 }

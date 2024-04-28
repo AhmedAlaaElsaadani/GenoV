@@ -1,26 +1,26 @@
 /* style h2 */
-.Register h2{
+.Contact h2{
     text-transform: uppercase;
     font-size: 2rem;
     font-weight: 800;
     letter-spacing: 0.1rem;
 }
-.Register h3{
+.Contact h3{
     text-transform: uppercase;
     font-size: 1.5rem;
     font-weight: 800;
     letter-spacing: 0.1rem;
 }
-.Register p{
+.Contact p{
     font-size: 3rem;
     font-weight: 900;
     letter-spacing: 0.1rem;
 }
-.Register p span{
+.Contact p span{
     color: var(--span-color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
-.Register form button{
+.Contact form button{
     background-color: var(--primary-color);
     width: 100%;
     color: white;
@@ -35,6 +35,6 @@
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
-.Register form button:hover{
+.Contact form button:hover{
     background-color: var(--secondary-color);
 }

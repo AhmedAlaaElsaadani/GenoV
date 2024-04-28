@@ -1,0 +1,31 @@
+.PreCalc .bg  {
+    background-color: #363636;
+}
+.PreCalc table {
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse; /* Collapse borders for a cleaner appearance */
+}
+
+.PreCalc table td, 
+.PreCalc table th {
+    padding: 10px; /* Add padding to cells for better spacing */
+}
+
+.PreCalc thead tr {
+    background-color: #443D31;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.PreCalc tbody tr:hover {
+    background-color: #666; /* Highlight row on hover for interactivity */
+}
+
+.PreCalc tbody tr:nth-child(even) {
+    background-color: #555353; }
+
+
+

@@ -1,7 +1,9 @@
 import React from "react";
 import style from "./About.module.css";
+import CommonBackground from "../CommonBackgroundLayer/CommonBackground.jsx";
 export default function About() {
   return (
+    <CommonBackground>
     <section className={style.About}>
         <div className="container g-2">
           <div className="row ">
@@ -30,5 +32,6 @@ export default function About() {
           </div>
       </div>
     </section>
+    </CommonBackground>
   );
 }

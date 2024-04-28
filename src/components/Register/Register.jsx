@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 export default function Register() {
   return (
     <div
-    className={
-      "w-50 container  "+style.Register} 
+    className=
+      "w-50 container  " 
   >
-    <div className={"row bg-dark shadow rounded-5  overflow-hidden  text-white "+style.Login}
+    <div className={"row bg-dark shadow rounded-5  overflow-hidden  text-white "+style.Register}
     >
       <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
         <img src="../Images/Logo.png" className="my-3" alt="Logo" />
@@ -70,8 +70,8 @@ export default function Register() {
         <h3> Welcome to join us in  </h3>
         <p>Geno<span>V</span></p>
         <div className="w-100 d-flex justify-content-center gap-3">
-        <Link to='/forms/Login' className='btn linkNav btn-primary'>Login</Link>
-        <Link to='/Home' className='btn linkNav btn-primary'>Home</Link>
+        <Link to='/forms/Login' className='btn linkNav btn-light'>Login</Link>
+        <Link to='/Home' className='btn linkNav btn-outline-light'>Home</Link>
 
 
         </div>

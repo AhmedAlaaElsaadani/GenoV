@@ -13,7 +13,7 @@
     justify-content: center;
     align-items: center;
 }   
-.forms input{
+.forms input,.forms textarea{
     background-color: var(--blackToWhite);
     color: var(--whiteToBlack);
     border: none;
@@ -33,17 +33,16 @@
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
 }
-.forms input::placeholder{
+.forms input::placeholder,.forms textarea::placeholder{
     color: rgba(255, 255, 255, 0.562);
 }
-.forms input:focus{
+.forms input:focus,.forms textarea:focus{
     background-color: var(--secondary-color);
     outline: var(--primary-color) auto 1px;
-    border:none;
     color: var(--blackToWhite);
 
 }
 
-.forms input:focus::placeholder{
+.forms input:focus::placeholder,.forms textarea:focus::placeholder{
     color: rgba(0, 0, 0, 0.562);
 }

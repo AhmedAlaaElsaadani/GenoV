@@ -46,9 +46,9 @@ export default function Login() {
             </h3>
             <p>Geno<span>V</span></p>
             <div className="w-100 d-flex justify-content-center gap-3">
-            <Link to="/forms/Register" className="btn linkNav btn-primary">
+            <Link to="/forms/Register" className="btn linkNav btn-light">
               Register Now </Link>
-            <Link to="/" className="btn linkNav btn-primary">
+            <Link to="/" className="btn linkNav btn-outline-light">
               Home </Link>
           
             </div>

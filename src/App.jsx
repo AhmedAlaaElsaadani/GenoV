@@ -6,7 +6,8 @@ import About from './components/About/About';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Docs from './components/Docs/Docs';
-import CommonBackground from './components/CommonBackgroundLayer/CommonBackground';
+import PreCalc from './components/PreCalc/PreCalc';
+import Contact from './components/Contact/Contact';
 
 function App() {
   let router = createBrowserRouter(
@@ -16,21 +17,25 @@ function App() {
       children:[
         {index:true, element: <Hero/>},
         {path:"home", element:<Hero/>},
-        {path:"about", element:<CommonBackground><About/></CommonBackground>},
-        {path:"Docs",element:<CommonBackground><Docs/></CommonBackground>}
+        {path:"about", element:<About/>},
+        {path:"Docs",element:<Docs/>},
+        {path:"PreCalc",element:<PreCalc/>}
+
       ]
     }
     ,{
       path:"/forms",
       element:<FormLayout/>,
       children:[
-        // {index:true, element:<Login/>},
         {path:'Login', element:<Login/>},
-        {path:"Register",element:<Register/>}
+        {path:"Register",element:<Register/>},
+        {path:"contact",element:<Contact/>}
       ]
     }
     ]
   );
+
+
   return (
     <>
       <RouterProvider router={router}/>

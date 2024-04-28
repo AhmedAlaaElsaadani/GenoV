@@ -1,8 +1,10 @@
 import React from "react";
 import style from "./Docs.module.css";
+import CommonBackground from "../CommonBackgroundLayer/CommonBackground.jsx";
 
 export default function Docs() {
   return (
+    <CommonBackground>
     <section className={style.Docs}>
         <div className="container g-2">
           <div className="row ">
@@ -40,5 +42,6 @@ export default function Docs() {
           </div>
         </div>
     </section>
+    </CommonBackground>
   );
 }

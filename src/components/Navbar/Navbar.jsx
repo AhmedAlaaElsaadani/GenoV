@@ -138,7 +138,7 @@ const Navbar = () => {
               <li className="nav-item ">
                 <Link
                   className="nav-link active"
-                  aria_current="About"
+                  aria_current="Docs"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
                   to="/Docs"
                 >
@@ -149,11 +149,11 @@ const Navbar = () => {
               <li className="nav-item ">
                 <Link
                   className="nav-link active"
-                  aria_current="About"
+                  aria_current="PreCalc"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
-                  to="/About"
+                  to="/PreCalc"
                 >
-                  Pre-Calc
+                  Pre-Calcp
                 </Link>
               </li>
               <li className="nav-item ">
@@ -171,7 +171,7 @@ const Navbar = () => {
                   className="nav-link active"
                   aria_current="Contact"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
-                  to="/Contact"
+                  to="forms/Contact"
                 >
                   Contact
                 </Link>
