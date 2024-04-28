@@ -5,9 +5,16 @@
     --form-prim-color:  #363636c7;
     --blackToWhite: #1E1E1E;
     --whiteToBlack: #f1f1f1;
-    --secondary-color: #ffcc5c;
+    /*
+    preCalc 
+    Our Services 
+     */
+    --table-background:#363636;
+    --thead-background:#443D31;
+    --row-background:#555353;
     --footer-text-color: #949494c7;
     --span-color:#F4682D;
+
 }
 body{
        font-family: "Baumans", system-ui;

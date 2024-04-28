@@ -8,6 +8,7 @@ import Register from './components/Register/Register';
 import Docs from './components/Docs/Docs';
 import PreCalc from './components/PreCalc/PreCalc';
 import Contact from './components/Contact/Contact';
+import OurServices from './components/OurServices/OurServices';
 
 function App() {
   let router = createBrowserRouter(
@@ -19,7 +20,8 @@ function App() {
         {path:"home", element:<Hero/>},
         {path:"about", element:<About/>},
         {path:"Docs",element:<Docs/>},
-        {path:"PreCalc",element:<PreCalc/>}
+        {path:"PreCalc",element:<PreCalc/>},
+        {path:"OurServices",element:<OurServices/>},
 
       ]
     }

@@ -123,7 +123,7 @@ input::placeholder{
             `}
       </style>
       {/* 363636 */}
-      <section className={style.PreCalc + " w-100 mt-3 pb-5"}>
+      <section className={style.PreCalc + " mt-3 w-100 pb-5"}>
         <div className={"container rounded-5 overflow-auto  " + style.bg}>
           <div className="row my-4 ">
             <div className="col-12 test position-relative">
