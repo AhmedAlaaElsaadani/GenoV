@@ -3,13 +3,27 @@ import "./Navbar.css";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link, useLocation } from "react-router-dom";
 import { authContext } from "../../Context/authContext";
+import axios from "axios";
 const Navbar = () => {
   const [navbarCollapse, setNavbarCollapse] = useState();
   const [scrolled, setScrolled] = useState(true);
   const location = useLocation();
   const [HomeFlag, setHomeFlag] = useState(false);
-  let {isRegistered}=useContext(authContext);
-
+  let { isRegistered, setToken, token } = useContext(authContext);
+  // logout function
+  const logOut = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+    axios.post(
+      "https://genov.izitechs.com/accounts/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
   // specify style for nav item when refresh page
   const specifyStyleForNav = () => {
     document.querySelectorAll(".nav-link").forEach((element) => {
@@ -180,39 +194,65 @@ const Navbar = () => {
               </li>
             </ul>
             <ul className="navbar-nav gap-3 gap-lg-3  d-flex justify-content-between mb-2 mb-lg-0">
-              {
-                isRegistered?
-                <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria_current="Login"
-                  to="./"
-                >
-                  log Out
-                </Link>
-              </li>
-              :<>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria_current="Login"
-                  onClick={(e) => changeStyleClassFotNavItem(e)}
-                  to="/forms/Login"
-                  >
-                  Login
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link active"
-                  aria_current="Register"
-                  onClick={(e) => changeStyleClassFotNavItem(e)}
-                  to="/forms/Register"
-                >
-                  Register
-                </Link>
-              </li>
-              </>}
+              {isRegistered ? (
+                <>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link active"
+                      aria_current="profile"
+                      to="./"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        fill="currentColor"
+                        class="bi bi-person-circle"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path
+                          fill-rule="evenodd"
+                          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                        />
+                      </svg>{" "}
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link active"
+                      aria_current="logOut"
+                      onClick={(e) => logOut()}
+                      to="./"
+                    >
+                      log Out
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link active"
+                      aria_current="Login"
+                      onClick={(e) => changeStyleClassFotNavItem(e)}
+                      to="/forms/Login"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link active"
+                      aria_current="Register"
+                      onClick={(e) => changeStyleClassFotNavItem(e)}
+                      to="/forms/Register"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
