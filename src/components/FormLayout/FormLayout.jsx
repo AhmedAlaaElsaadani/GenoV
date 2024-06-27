@@ -7,7 +7,7 @@ export default function FormLayout() {
     <section
       className={
         style.forms +
-        " bg-dark vh-100 d-flex justify-content-center align-items-center vh-100"
+        " bg-dark  d-flex justify-content-center align-items-center vh-100"
       }
     >
       <div className={style.layer}>

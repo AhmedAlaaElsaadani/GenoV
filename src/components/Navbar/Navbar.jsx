@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link, useLocation } from "react-router-dom";
+import { authContext } from "../../Context/authContext";
 const Navbar = () => {
   const [navbarCollapse, setNavbarCollapse] = useState();
   const [scrolled, setScrolled] = useState(true);
   const location = useLocation();
   const [HomeFlag, setHomeFlag] = useState(false);
+  let {isRegistered}=useContext(authContext);
 
   // specify style for nav item when refresh page
   const specifyStyleForNav = () => {
@@ -178,13 +180,25 @@ const Navbar = () => {
               </li>
             </ul>
             <ul className="navbar-nav gap-3 gap-lg-3  d-flex justify-content-between mb-2 mb-lg-0">
+              {
+                isRegistered?
+                <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  aria_current="Login"
+                  to="./"
+                >
+                  log Out
+                </Link>
+              </li>
+              :<>
               <li className="nav-item">
                 <Link
                   className="nav-link active"
                   aria_current="Login"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
                   to="/forms/Login"
-                >
+                  >
                   Login
                 </Link>
               </li>
@@ -198,6 +212,7 @@ const Navbar = () => {
                   Register
                 </Link>
               </li>
+              </>}
             </ul>
           </div>
         </div>

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import style from "./Login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
+import axios from "axios";
+import { authContext } from "../../Context/authContext";
 
 export default function Login() {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMes, setSuccessMes] = useState("");
+  const [loading, setLoading] = useState(false)
+  let {setToken} =useContext(authContext);
+  let navigator=useNavigate()
+  
   /**
    * validate input take values object and return errors object after
    * checking if the email and password are valid or not
@@ -12,12 +20,8 @@ export default function Login() {
    */
   let validateInputs = (values) => {
     const errors = {};
-    if (!values.email) {
-      errors.email = "Required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Invalid email address";
+    if (!values.emailOrPhone) {
+      errors.emailOrPhone = "Required";
     }
     if (!values.password) {
       errors.password = "Required";
@@ -30,14 +34,57 @@ export default function Login() {
     }
     return errors;
   };
+
+  let logInUser = async (values) => {
+    const myHeaders = {
+      "Content-Type": "application/json",
+    };
+
+    const user = {
+      EMAILORPHONE: values.emailOrPhone,
+      PASSWORD: values.password,
+      Rememberme: values.rememberMe ? 1 : 0,
+    };
+    setLoading(true)
+    try {
+      console.log(user);
+      let { data } = await axios.post(
+        "https://genov.izitechs.com/accounts/login",
+        user,
+        {
+          headers: myHeaders,
+        }
+      );
+      if (data.token) {
+        //success
+        setToken(data.token);
+        setErrorMessage("");
+        setSuccessMes("Welcome Back")
+        localStorage.setItem("token", data.token);
+
+        setTimeout(() => {
+          navigator("/");
+        }, 2000);
+
+
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response.data.code === 401) {
+        setErrorMessage(error.response.data.message);
+      } else {
+        setErrorMessage("Something went wrong");
+      }
+      setLoading(false)
+    }
+  };
   const myFormik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      rememberMe: false,
     },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+    onSubmit: logInUser,
     validate: validateInputs,
   });
   return (
@@ -50,20 +97,29 @@ export default function Login() {
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
           <img src="../Images/Logo.png" className="my-3" alt="Logo" />
+          {errorMessage ? (
+            <div className="text-danger">{errorMessage}</div>
+          ) : null}
+          {successMes ? (
+            <div className="text-success">{successMes}</div>
+          ) : null}
           <form action="" onSubmit={myFormik.handleSubmit} className="w-75">
             <div className="mb-1">
               <label htmlFor="email" className="form-label">
-                Email address
+                Email address or Phone number
               </label>
               <input
                 onChange={myFormik.handleChange}
-                value={myFormik.values.email}
-                type="email"
-                id="email"
+                onBlur={myFormik.handleBlur}
+                value={myFormik.values.emailOrPhone}
+                type="text"
+                id="emailOrPhone"
                 placeholder="Enter your email"
               />
-              {myFormik.errors.email ? (
-                <div className="text-danger">{myFormik.errors.email}</div>
+              {myFormik.errors.emailOrPhone && myFormik.touched.emailOrPhone ? (
+                <div className="text-danger">
+                  {myFormik.errors.emailOrPhone}
+                </div>
               ) : null}
             </div>
             <div className="mb-1">
@@ -72,16 +128,31 @@ export default function Login() {
               </label>
               <input
                 onChange={myFormik.handleChange}
+                onBlur={myFormik.handleBlur}
                 value={myFormik.values.password}
                 type="password"
                 id="password"
                 placeholder="Enter your password"
               />
-              {myFormik.errors.password ? (
+              {myFormik.errors.password &&myFormik.touched.password ? (
                 <div className="text-danger">{myFormik.errors.password}</div>
               ) : null}
             </div>
-            <button type="submit">Submit</button>
+
+            <div className="mb-1 d-flex justify-content-between">
+              <label htmlFor="rememberMe" className="form-label">
+                Remember me
+              </label>
+              <input
+                type="checkbox"
+                value={myFormik.values.rememberMe}
+                checked={myFormik.values.rememberMe}
+                onChange={myFormik.handleChange}
+                id="rememberMe"
+                className={"form-check form-check-input  " + style.checkBox}
+              />
+            </div>
+            <button type="submit">{loading?"...." :"Submit"}</button>
           </form>
         </div>
 

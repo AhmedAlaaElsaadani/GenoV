@@ -21,6 +21,11 @@
 .Login p span{
     color: var(--span-color);
 }
+.Login .checkBox{
+    background-color: var(--whiteToBlack);
+    width: 10%;
+
+}
 .Login form button{
     background-color: var(--primary-color);
     width: 100%;
