@@ -29,14 +29,39 @@ function App() {
     {
       path: "/forms",
       element: (
-        <InverseProtectedRoute>
           <FormLayout />
-        </InverseProtectedRoute>
       ),
       children: [
-        { path: "Login", element: <Login /> },
-        { path: "Register", element: <Register /> },
-        { path: "contact", element: <Contact /> },
+        {
+          path: "",
+          element: (
+            <InverseProtectedRoute>
+              <Login />
+            </InverseProtectedRoute>
+          ),
+        },
+        {
+          path: "Login",
+          element: (
+            <InverseProtectedRoute>
+              <Login />
+            </InverseProtectedRoute>
+          ),
+        },
+        {
+          path: "Register",
+          element: (
+            <InverseProtectedRoute>
+              <Register />
+            </InverseProtectedRoute>
+          ),
+        },
+        {
+          path: "contact",
+          element: (
+              <Contact />
+          ),
+        },
       ],
     },
   ]);

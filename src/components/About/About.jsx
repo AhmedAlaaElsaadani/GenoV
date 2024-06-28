@@ -1,6 +1,8 @@
 import React from "react";
 import style from "./About.module.css";
 import CommonBackground from "../CommonBackgroundLayer/CommonBackground.jsx";
+import AboutImage from "../../assets/Images/About.png"
+
 export default function About() {
   return (
     <CommonBackground>
@@ -27,7 +29,7 @@ export default function About() {
               </div>
             </div>
             <div className=" col-md-6">
-              <img src="Images/About.png" className="w-100 h-100" alt="cartoon scientist Image " />
+              <img src={AboutImage} className="w-100 h-100" alt="cartoon scientist Image " />
             </div>
           </div>
       </div>

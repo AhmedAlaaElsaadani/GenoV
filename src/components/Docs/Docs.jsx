@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Docs.module.css";
 import CommonBackground from "../CommonBackgroundLayer/CommonBackground.jsx";
+import DocsImage from "../../assets/Images/Docs.png"
 
 export default function Docs() {
   return (
@@ -10,7 +11,7 @@ export default function Docs() {
           <div className="row ">
             <div className=" col-md-6">
               <img
-                src="Images/Docs.png"
+                src={DocsImage}
                 className="w-100 h-100"
                 alt="cartoon scientist Image "
               />

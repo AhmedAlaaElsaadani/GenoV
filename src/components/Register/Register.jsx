@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import logo from "../../assets/Images/Logo.png"
+
 export default function Register() {
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -94,7 +96,7 @@ export default function Register() {
         }
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-          <img src="../Images/Logo.png" className="my-3" alt="Logo" />
+          <img src={logo} className="my-3" alt="Logo" />
           {(errorMessage) ? (
             <div className="text-danger">{errorMessage}</div>
           ) : null}
@@ -208,7 +210,21 @@ export default function Register() {
                 </div>
               ) : null}
             </div>
-            <button disabled={loading} type="submit">{loading? "...." :"Sign Up" }</button>
+            <button disabled={loading} type="submit">{loading? (<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className={"bi bi-arrow-counterclockwise " + style.spinner}
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
+                  />
+                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
+                </svg>
+              ) : (
+                "Submit Message"
+              )}</button>
           </form>
         </div>
 

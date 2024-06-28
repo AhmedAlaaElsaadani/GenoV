@@ -4,14 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import { authContext } from "../../Context/authContext";
+import logo from "../../assets/Images/Logo.png";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMes, setSuccessMes] = useState("");
-  const [loading, setLoading] = useState(false)
-  let {setToken} =useContext(authContext);
-  let navigator=useNavigate()
-  
+  const [loading, setLoading] = useState(false);
+  let { setToken } = useContext(authContext);
+  let navigator = useNavigate();
+
   /**
    * validate input take values object and return errors object after
    * checking if the email and password are valid or not
@@ -45,7 +46,7 @@ export default function Login() {
       PASSWORD: values.password,
       Rememberme: values.rememberMe ? 1 : 0,
     };
-    setLoading(true)
+    setLoading(true);
     try {
       console.log(user);
       let { data } = await axios.post(
@@ -59,14 +60,12 @@ export default function Login() {
         //success
         setToken(data.token);
         setErrorMessage("");
-        setSuccessMes("Welcome Back")
+        setSuccessMes("Welcome Back");
         localStorage.setItem("token", data.token);
 
         setTimeout(() => {
           navigator("/");
         }, 2000);
-
-
       }
     } catch (error) {
       console.log(error);
@@ -75,7 +74,7 @@ export default function Login() {
       } else {
         setErrorMessage("Something went wrong");
       }
-      setLoading(false)
+      setLoading(false);
     }
   };
   const myFormik = useFormik({
@@ -96,13 +95,11 @@ export default function Login() {
         }
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-          <img src="../Images/Logo.png" className="my-3" alt="Logo" />
+          <img src={logo} className="my-3" alt="Logo" />
           {errorMessage ? (
             <div className="text-danger">{errorMessage}</div>
           ) : null}
-          {successMes ? (
-            <div className="text-success">{successMes}</div>
-          ) : null}
+          {successMes ? <div className="text-success">{successMes}</div> : null}
           <form action="" onSubmit={myFormik.handleSubmit} className="w-75">
             <div className="mb-1">
               <label htmlFor="email" className="form-label">
@@ -134,7 +131,7 @@ export default function Login() {
                 id="password"
                 placeholder="Enter your password"
               />
-              {myFormik.errors.password &&myFormik.touched.password ? (
+              {myFormik.errors.password && myFormik.touched.password ? (
                 <div className="text-danger">{myFormik.errors.password}</div>
               ) : null}
             </div>
@@ -152,7 +149,24 @@ export default function Login() {
                 className={"form-check form-check-input  " + style.checkBox}
               />
             </div>
-            <button type="submit">{loading?"...." :"Submit"}</button>
+            <button disabled={loading} type="submit">
+              {loading ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  className={"bi bi-arrow-counterclockwise " + style.spinner}
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
+                  />
+                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
+                </svg>
+              ) : (
+                "Submit Message"
+              )}
+            </button>
           </form>
         </div>
 

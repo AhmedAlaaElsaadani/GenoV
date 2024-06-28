@@ -4,6 +4,11 @@ import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link, useLocation } from "react-router-dom";
 import { authContext } from "../../Context/authContext";
 import axios from "axios";
+import UpdateProfile from "../UpdateProfile/UpdateProfile";
+import logo from "../../assets/Images/Logo.png"
+import logoWhite from "../../assets/Images/Logo White.png"
+
+
 const Navbar = () => {
   const [navbarCollapse, setNavbarCollapse] = useState();
   const [scrolled, setScrolled] = useState(true);
@@ -106,8 +111,8 @@ const Navbar = () => {
             <img
               src={
                 scrolled && HomeFlag
-                  ? "Images/Logo.png"
-                  : "Images/Logo White.png"
+                  ? logo
+                  : logoWhite
               }
               style={{ width: "125px" }}
               alt="logo website "
@@ -257,6 +262,9 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      {
+       false&& <UpdateProfile/>
+      }
     </>
   );
 };
