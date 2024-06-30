@@ -11,6 +11,8 @@ import Contact from "./components/Contact/Contact";
 import OurServices from "./components/OurServices/OurServices";
 import AuthProvider from "./Context/authContext";
 import InverseProtectedRoute from "./components/InverseProtectedRoute/InverseProtectedRoute";
+import OtpConfirm from "./components/Otp/OtpConfirm";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   let router = createBrowserRouter([
@@ -62,6 +64,12 @@ function App() {
               <Contact />
           ),
         },
+        {
+          path:'emailConfirmation',
+         element:<ProtectedRoute><OtpConfirm/>
+          </ProtectedRoute>
+
+        }
       ],
     },
   ]);

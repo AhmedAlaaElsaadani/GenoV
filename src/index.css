@@ -16,6 +16,9 @@
     --row-background:#555353;
     --footer-text-color: #949494c7;
     --span-color:#F4682D;
+    /* 
+    Update profile */
+    --form-bg-updateProfile:  #363636;
 
 }
 body{
@@ -35,13 +38,6 @@ button{
     -moz-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
-}
-button:hover{
-    transform: scale(1.03);
-    -webkit-transform: scale(1.03);
-    -moz-transform: scale(1.03);
-    -ms-transform: scale(1.03);
-    -o-transform: scale(1.03);
 }
 button:active{
     transform: scale(0.9);
@@ -70,6 +66,36 @@ button:active{
     -ms-transform: scale(0.9);
     -o-transform: scale(0.9);
 }
+
+
+button.form-button {
+    background-color: var(--primary-color);
+    width: 100%;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-top: 12px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+  }
+  button.form-button:hover {
+    background-color: var(--secondary-color);
+  }
+  button.form-button:disabled {
+    background-color: var(--disabled-color);
+    cursor : wait;
+  
+  }
 ::selection{
     background-color: var(--primary-color);
     color: white;

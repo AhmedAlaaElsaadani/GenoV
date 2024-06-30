@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import logo from "../../assets/Images/Logo.png";
 import axios from "axios";
+import Spinner from "../../miniComponent/Spinner/Spinner";
 
 export default function Contact() {
   const [responseFlag, setResponseFlag] = useState(false);
@@ -86,8 +87,9 @@ export default function Contact() {
         }
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-          <img src={logo} className="my-3" alt="Logo" />
-
+        <Link to="/">
+        <img src={logo} className="my-3" alt="Logo" />
+</Link>
           {resMessage != null ? (
             <div className={resMessage.flag ? style.success : style.error}>
               {resMessage.message}
@@ -147,21 +149,10 @@ export default function Contact() {
                 <div className="text-danger">{myFormik.errors.message}</div>
               ) : null}
             </div>
-            <button type="submit">
+            <button disabled={responseFlag} type="submit" className="form-button">
 
               {responseFlag ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  className={"bi bi-arrow-counterclockwise " + style.spinner}
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
-                  />
-                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
-                </svg>
+               <Spinner/>
               ) : (
                 "Submit Message"
               )}

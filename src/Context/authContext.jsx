@@ -1,19 +1,60 @@
+import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 // Correct usage of createContext
 export const authContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const [user, setUser] = useState(null);
+  /**
+   * this function check if the session is still valid or not
+   * @returns {void}
+   */
+  const checkSession = async () => {
+    setIsRegistered(await checkIfSessionEnd(token));
+  };
+  /**
+   * this function get Current User Data
+   * @param {string} token
+   * @returns {void}
+   */
+  const getCurrentUserData = async (token) => {
+    try {
+      const { data } = await axios.get(
+        `https://genov.izitechs.com/accounts/currentuser`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!data.code) {
+        setUser(data);
+      }
+    } catch (error) {}
+  };
+  useEffect(() => {
+    let tokenFromLocalStorage = localStorage.getItem("token");
+
+    if (tokenFromLocalStorage) {
+      setToken(tokenFromLocalStorage);
+      checkSession();
+    }
+  }, []);
 
   useEffect(() => {
-    const checkSession = async () => {
-      setIsRegistered(await checkIfSessionEnd(token));
-    };
-
-    checkSession();
+    if (token) checkSession();
+    else setIsRegistered(false);
   }, [token]);
+
+  useEffect(() => {
+    if (isRegistered) {
+      getCurrentUserData(token);
+    }
+  }, [isRegistered]);
 
   return (
     <authContext.Provider
@@ -21,6 +62,8 @@ export default function AuthProvider({ children }) {
         token,
         setToken,
         isRegistered,
+        user,
+        setUser,
       }}
     >
       {children}
@@ -39,8 +82,9 @@ export function startANewSession() {
 
 export function endACurrentSession() {
   localStorage.setItem("sessionFlag", "false");
-  localStorage.removeItem("user");
   localStorage.removeItem("endDateSession");
+  localStorage.removeItem("startDateSession");
+  localStorage.removeItem("token");
 }
 
 async function isUserSession(token) {
@@ -93,7 +137,6 @@ async function checkUser(token) {
       return { status: false };
     }
   } catch (error) {
-    console.error("Error validating token:", error);
     return { status: false };
   }
 }

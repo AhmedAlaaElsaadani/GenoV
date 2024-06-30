@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import style from "./Register.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import logo from "../../assets/Images/Logo.png"
+import logo from "../../assets/Images/Logo.png";
+import Spinner from "../../miniComponent/Spinner/Spinner";
+import { authContext } from "../../Context/authContext";
 
 export default function Register() {
   const validationSchema = Yup.object().shape({
@@ -23,8 +25,7 @@ export default function Register() {
         8,
         "Password must be 8 characters long and contain at least one letter and one number"
       )
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      .matches( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W]{8,}$/,
         "Password must be 8 characters long and contain at least one letter and one number"
       )
       .required("Required"),
@@ -36,7 +37,7 @@ export default function Register() {
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
   let navigator = useNavigate();
-
+  let{setToken} = useContext(authContext);
 
   let sendUserData = async (values) => {
     const myHeaders = {
@@ -58,8 +59,9 @@ export default function Register() {
         //success
         setSuccessMessage("User registered successfully");
         setErrorMessage("");
+        setToken(data.token);
         setTimeout(() => {
-          navigator("/forms/Login");
+          navigator("/forms/emailConfirmation");
         }, 3000);
       }
     } catch (error) {
@@ -95,141 +97,138 @@ export default function Register() {
           style.Register
         }
       >
-        <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-          <img src={logo} className="my-3" alt="Logo" />
-          {(errorMessage) ? (
+        <div className=" p-5 col-md-7 d-flex flex-column justify-content-center align-items-center">
+        <Link to="/">
+        <img src={logo} className="my-3" alt="Logo" /></Link>
+          {errorMessage ? (
             <div className="text-danger">{errorMessage}</div>
           ) : null}
           {successMessage ? (
             <div className="text-success">{successMessage} </div>
           ) : null}
-          <form action="" onSubmit={myFormik.handleSubmit} className="w-75">
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                onBlur={myFormik.handleBlur}
-                onChange={myFormik.handleChange}
-                value={myFormik.values.name}
-                type="text"
-                className="form-control"
-                id="name"
-                placeholder="Enter your name"
-              />
-              {myFormik.errors.name && myFormik.touched.name ? (
-                <div className="text-danger">{myFormik.errors.name}</div>
-              ) : null}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="name" className="form-label">
-                User Name
-              </label>
-              <input
-                onBlur={myFormik.handleBlur}
-                onChange={myFormik.handleChange}
-                value={myFormik.values.userName}
-                type="text"
-                className="form-control"
-                id="userName"
-                placeholder="Enter your userName"
-              />
-              {myFormik.errors.userName && myFormik.touched.userName ? (
-                <div className="text-danger">{myFormik.errors.userName}</div>
-              ) : null}
-            </div>
+          <form
+            action=""
+            onSubmit={myFormik.handleSubmit}
+            className=" container"
+          >
+            <div className="row w-100 h-100">
+              <div className="mb-3 col-sm-6">
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
+                <input
+                  onBlur={myFormik.handleBlur}
+                  onChange={myFormik.handleChange}
+                  value={myFormik.values.name}
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  placeholder="Enter your name"
+                />
+                {myFormik.errors.name && myFormik.touched.name ? (
+                  <div className="text-danger">{myFormik.errors.name}</div>
+                ) : null}
+              </div>
+              <div className="mb-3 col-sm-6">
+                <label htmlFor="name" className="form-label">
+                  User Name
+                </label>
+                <input
+                  onBlur={myFormik.handleBlur}
+                  onChange={myFormik.handleChange}
+                  value={myFormik.values.userName}
+                  type="text"
+                  className="form-control"
+                  id="userName"
+                  placeholder="Enter your userName"
+                />
+                {myFormik.errors.userName && myFormik.touched.userName ? (
+                  <div className="text-danger">{myFormik.errors.userName}</div>
+                ) : null}
+              </div>
 
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                phone Number
-              </label>
-              <input
-                onBlur={myFormik.handleBlur}
-                onChange={myFormik.handleChange}
-                value={myFormik.values.phoneNumber}
-                type="tel"
-                className="form-control"
-                id="phoneNumber"
-                placeholder="Enter your phone Number"
-              />
-              {myFormik.errors.phoneNumber && myFormik.touched.phoneNumber ? (
-                <div className="text-danger">{myFormik.errors.phoneNumber}</div>
-              ) : null}
+              <div className="mb-3 col-sm-6">
+                <label htmlFor="email" className="form-label">
+                  phone Number
+                </label>
+                <input
+                  onBlur={myFormik.handleBlur}
+                  onChange={myFormik.handleChange}
+                  value={myFormik.values.phoneNumber}
+                  type="tel"
+                  className="form-control"
+                  id="phoneNumber"
+                  placeholder="Enter your phone Number"
+                />
+                {myFormik.errors.phoneNumber && myFormik.touched.phoneNumber ? (
+                  <div className="text-danger">
+                    {myFormik.errors.phoneNumber}
+                  </div>
+                ) : null}
+              </div>
+              <div className="mb-3 col-sm-6">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  onBlur={myFormik.handleBlur}
+                  onChange={myFormik.handleChange}
+                  value={myFormik.values.email}
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  placeholder="Enter your email"
+                />
+                {myFormik.errors.email && myFormik.touched.email ? (
+                  <div className="text-danger">{myFormik.errors.email}</div>
+                ) : null}
+              </div>
+              <div className="mb-3 col-sm-6">
+                <label htmlFor="password" className="form-label">
+                  Password
+                </label>
+                <input
+                  onBlur={myFormik.handleBlur}
+                  onChange={myFormik.handleChange}
+                  value={myFormik.values.password}
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  placeholder="Enter your password"
+                />
+                {myFormik.errors.password && myFormik.touched.password ? (
+                  <div className="text-danger">{myFormik.errors.password}</div>
+                ) : null}
+              </div>
+              <div className="mb-3 col-sm-6">
+                <label htmlFor="confirmPassword" className="form-label">
+                  Confirm Password
+                </label>
+                <input
+                  onBlur={myFormik.handleBlur}
+                  onChange={myFormik.handleChange}
+                  value={myFormik.values.confirmPassword}
+                  type="password"
+                  className="form-control"
+                  id="confirmPassword"
+                  placeholder="Confirm your password"
+                />
+                {myFormik.errors.confirmPassword &&
+                myFormik.touched.confirmPassword ? (
+                  <div className="text-danger">
+                    {myFormik.errors.confirmPassword}
+                  </div>
+                ) : null}
+              </div>
+              <button disabled={loading} type="submit" className="form-button">
+                {loading ? <Spinner /> : "Submit Message"}
+              </button>
             </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                onBlur={myFormik.handleBlur}
-                onChange={myFormik.handleChange}
-                value={myFormik.values.email}
-                type="email"
-                className="form-control"
-                id="email"
-                placeholder="Enter your email"
-              />
-              {myFormik.errors.email && myFormik.touched.email ? (
-                <div className="text-danger">{myFormik.errors.email}</div>
-              ) : null}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
-              <input
-                onBlur={myFormik.handleBlur}
-                onChange={myFormik.handleChange}
-                value={myFormik.values.password}
-                type="password"
-                className="form-control"
-                id="password"
-                placeholder="Enter your password"
-              />
-              {myFormik.errors.password && myFormik.touched.password ? (
-                <div className="text-danger">{myFormik.errors.password}</div>
-              ) : null}
-            </div>
-            <div className="mb-3">
-              <label htmlFor="confirmPassword" className="form-label">
-                Confirm Password
-              </label>
-              <input
-                onBlur={myFormik.handleBlur}
-                onChange={myFormik.handleChange}
-                value={myFormik.values.confirmPassword}
-                type="password"
-                className="form-control"
-                id="confirmPassword"
-                placeholder="Confirm your password"
-              />
-              {myFormik.errors.confirmPassword &&
-              myFormik.touched.confirmPassword ? (
-                <div className="text-danger">
-                  {myFormik.errors.confirmPassword}
-                </div>
-              ) : null}
-            </div>
-            <button disabled={loading} type="submit">{loading? (<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  className={"bi bi-arrow-counterclockwise " + style.spinner}
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
-                  />
-                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
-                </svg>
-              ) : (
-                "Submit Message"
-              )}</button>
           </form>
         </div>
 
         <div
-          className="bg-warning d-flex justify-content-center align-items-center gap-3 flex-column col-md-6 "
+          className="bg-warning d-flex justify-content-center align-items-center gap-3 flex-column col-md-5 "
           style={{ borderRadius: "150px 0 0 150px" }}
         >
           <h2>Sign UP</h2>

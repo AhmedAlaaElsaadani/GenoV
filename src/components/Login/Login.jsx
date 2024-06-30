@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { authContext } from "../../Context/authContext";
 import logo from "../../assets/Images/Logo.png";
+import Spinner from "../../miniComponent/Spinner/Spinner";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -12,7 +13,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   let { setToken } = useContext(authContext);
   let navigator = useNavigate();
-
   /**
    * validate input take values object and return errors object after
    * checking if the email and password are valid or not
@@ -79,12 +79,11 @@ export default function Login() {
   };
   const myFormik = useFormik({
     initialValues: {
-      email: "",
+      email: "",  
       password: "",
       rememberMe: false,
     },
     onSubmit: logInUser,
-    validate: validateInputs,
   });
   return (
     <div className="w-50 container  ">
@@ -95,7 +94,8 @@ export default function Login() {
         }
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-          <img src={logo} className="my-3" alt="Logo" />
+        <Link to="/">
+        <img src={logo} className="my-3" alt="Logo" /></Link>
           {errorMessage ? (
             <div className="text-danger">{errorMessage}</div>
           ) : null}
@@ -149,20 +149,9 @@ export default function Login() {
                 className={"form-check form-check-input  " + style.checkBox}
               />
             </div>
-            <button disabled={loading} type="submit">
+            <button disabled={loading} type="submit" className="form-button">
               {loading ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  className={"bi bi-arrow-counterclockwise " + style.spinner}
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"
-                  />
-                  <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
-                </svg>
+                <Spinner/>
               ) : (
                 "Submit Message"
               )}

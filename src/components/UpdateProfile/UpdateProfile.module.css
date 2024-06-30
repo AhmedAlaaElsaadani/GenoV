@@ -1,4 +1,4 @@
-.popLayer {
+.updateProfile {
   width: 100%;
   top: 0;
   bottom: 0;
@@ -10,4 +10,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+.formLayer {
+  width: 25%;
+  background-color: var(--form-bg-updateProfile);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.formLayer label{
+  color: var(--whiteToBlack);
+
+}
+.validateMessage {
+  color: red;
+  font-size: 18px;
+  text-align: center;
 }
