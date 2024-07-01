@@ -3,10 +3,10 @@ import style from "./Register.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import logo from "../../assets/Images/Logo.png";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import { authContext } from "../../Context/authContext";
+import ApiManager from "../../Utilies/ApiManager";
 
 export default function Register() {
   const validationSchema = Yup.object().shape({
@@ -25,7 +25,8 @@ export default function Register() {
         8,
         "Password must be 8 characters long and contain at least one letter and one number"
       )
-      .matches( /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W]{8,}$/,
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W]{8,}$/,
         "Password must be 8 characters long and contain at least one letter and one number"
       )
       .required("Required"),
@@ -37,24 +38,13 @@ export default function Register() {
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
   let navigator = useNavigate();
-  let{setToken} = useContext(authContext);
+  let { setToken } = useContext(authContext);
 
   let sendUserData = async (values) => {
-    const myHeaders = {
-      "Content-Type": "application/json",
-    };
     let user = values;
     setLoading(true);
     try {
-      console.log(user);
-      let { data } = await axios.post(
-        "https://genov.izitechs.com/accounts/register",
-        user,
-        {
-          headers: myHeaders,
-        }
-      );
-      console.log(data);
+      let { data } = await ApiManager.register(user);
       if (data.token) {
         //success
         setSuccessMessage("User registered successfully");
@@ -98,8 +88,9 @@ export default function Register() {
         }
       >
         <div className=" p-5 col-md-7 d-flex flex-column justify-content-center align-items-center">
-        <Link to="/">
-        <img src={logo} className="my-3" alt="Logo" /></Link>
+          <Link to="/">
+            <img src={logo} className="my-3" alt="Logo" />
+          </Link>
           {errorMessage ? (
             <div className="text-danger">{errorMessage}</div>
           ) : null}
@@ -149,7 +140,7 @@ export default function Register() {
 
               <div className="mb-3 col-sm-6">
                 <label htmlFor="email" className="form-label">
-                  phone Number
+                  Phone Number
                 </label>
                 <input
                   onBlur={myFormik.handleBlur}

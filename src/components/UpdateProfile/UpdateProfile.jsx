@@ -4,47 +4,35 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import { authContext } from "../../Context/authContext";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import ApiManager from "../../Utilies/ApiManager";
 
 export default function UpdateProfile({ setProfileUpdate, profileUpdate }) {
-  let { setToken, token, setUser,user } = useContext(authContext);
+  let { setToken, token, setUser, user } = useContext(authContext);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const[successMessage, setSuccessMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const updateProfile = async (values) => {
-    const myHeaders = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
     let user = {
       Name: values.name,
       PhoneNumber: values.phoneNumber,
       Gender: "M",
-      email: ( values.emailConfirmed?null:values.email),
+      email: values.emailConfirmed ? null : values.email,
       userName: values.userName,
     };
     setLoading(true);
     try {
-      let { data } = await axios.put(
-        "https://genov.izitechs.com/accounts/updatecurrent",
-        user,
-        {
-          headers: myHeaders,
-        }
-      );
-      console.log(data);
-      if (data.code!==200) {
+      let { data } = await ApiManager.updateProfile(user, token);
+      if (!data.token) {
         //error
         setErrorMessage(data.errors[0]);
       } else {
         //success
-        setToken(data.token);
         setLoading(false);
-        setUser({ ...values, phone: values?.phoneNumber },)
-        
+        setUser({ ...values, phone: values?.phoneNumber });
         setSuccessMessage(data.message);
+        setToken(data.token);
       }
     } catch (error) {
       console.log(error);
@@ -155,7 +143,10 @@ export default function UpdateProfile({ setProfileUpdate, profileUpdate }) {
               onChange={myFormik.handleChange}
               value={myFormik.values.email}
               type="email"
-              className={"form-control "+(myFormik.values.emailConfirmed?"bg-secondary":"")}
+              className={
+                "form-control " +
+                (myFormik.values.emailConfirmed ? "bg-secondary" : "")
+              }
               id="email"
               placeholder="Enter your email"
               disabled={myFormik.values.emailConfirmed}
@@ -167,18 +158,16 @@ export default function UpdateProfile({ setProfileUpdate, profileUpdate }) {
           <button disabled={loading} type="submit" className="form-button">
             {loading ? <Spinner /> : "Update"}
           </button>
-          {
-            myFormik.values.emailConfirmed?null:
-            <div className={"w-100  mt-2 d-flex flex-column "+style.validateMessage}>
+          {myFormik.values.emailConfirmed ? null : (
+            <div
+              className={
+                "w-100  mt-2 d-flex flex-column " + style.validateMessage
+              }
+            >
               you need to validate your email
-  
-              <Link to={"/forms/emailConfirmation" } >
-              Validate Email
-              </Link>
-  
+              <Link to={"/forms/emailConfirmation"}>Validate Email</Link>
             </div>
-
-          }
+          )}
         </form>
       </div>
     </section>

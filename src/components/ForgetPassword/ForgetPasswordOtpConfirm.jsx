@@ -1,24 +1,21 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import style from "./OtpConfirm.module.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useFormik } from "formik";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import logo from "../../assets/Images/Logo.png";
-import { authContext } from "../../Context/authContext";
+import style from "./ForgetPassword.module.css";
 import ApiManager from "../../Utilies/ApiManager";
 
-export default function OtpConfirm() {
+export default function ForgetPasswordOtpConfirm() {
   const [responseFlag, setResponseFlag] = useState(false);
   const [resMessage, setResMessage] = useState(null);
   const [canResend, setCanResend] = useState(false);
   const [countdown, setCountdown] = useState(90); // 1.5 minutes
   const otpRefs = useRef([]);
   const navigate = useNavigate();
-  let { token, user, setUser } = useContext(authContext);
+  const location = useLocation();
+  const email = location.state?.email;
 
-  useEffect(() => {
-    sendInitialOtp();
-  }, []);
 
   useEffect(() => {
     let timer;
@@ -30,15 +27,6 @@ export default function OtpConfirm() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  const sendInitialOtp = async () => {
-    try {
-      await ApiManager.sendOtp(token);
-      console.log("OTP sent");
-    } catch (error) {
-      console.error("Error sending OTP:", error);
-    }
-  };
-
   const resendOtp = async () => {
     setCanResend(false);
     setCountdown(90); // Reset the countdown
@@ -49,31 +37,27 @@ export default function OtpConfirm() {
     const otp = values.otp.join("");
 
     setResponseFlag(true);
-    await ApiManager.otpConfirm(otp, token)
-      .then((response) => {
-        const res = response.data;
-        if (res.code && res.code === 200) {
-          setUser({ ...user, emailConfirmed: true });
-          setResMessage({ flag: true, message: res.message });
-          if (res.emailConfirmation) {
-            navigate("/");
-          }
-        } else {
-          setResMessage({
-            flag: false,
-            message: "Invalid OTP, please try again.",
-          });
-        }
-        setResponseFlag(false);
-      })
-      .catch((error) => {
-        console.error("There was an error verifying the OTP!", error);
-        setResponseFlag(false);
+    try {
+      const response = await ApiManager.otpConfirm({ otp, email });
+      const res = response.data;
+      if (res.success) {
+        setResMessage({ flag: true, message: res.message });
+        navigate("/reset-password", { state: { email } });
+      } else {
         setResMessage({
           flag: false,
-          message: "Something went wrong, please try again later.",
+          message: "Invalid OTP, please try again.",
         });
+      }
+      setResponseFlag(false);
+    } catch (error) {
+      console.error("There was an error verifying the OTP!", error);
+      setResponseFlag(false);
+      setResMessage({
+        flag: false,
+        message: "Something went wrong, please try again later.",
       });
+    }
   };
 
   const myFormik = useFormik({
@@ -115,17 +99,12 @@ export default function OtpConfirm() {
     }
   };
 
-  if (user && user.emailConfirmation) {
-    console.log(user);
-    return <Navigate to="/" />;
-  }
-
   return (
     <div className="w-50 container">
       <div
         className={
           "row bg-dark shadow rounded-5 overflow-hidden text-white " +
-          style.Contact
+          style.ForgetPassword
         }
       >
         <div className="p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">

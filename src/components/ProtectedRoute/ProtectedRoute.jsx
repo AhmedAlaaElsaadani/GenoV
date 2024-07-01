@@ -5,6 +5,10 @@ import { authContext } from "../../Context/authContext";
 
 export default function ProtectedRoute(props) {
   const { isRegistered } = useContext(authContext);
+  useEffect(() => {
+    console.log("HI",isRegistered);
+
+  }, []);
 
   if (isRegistered) {
       return props.children;

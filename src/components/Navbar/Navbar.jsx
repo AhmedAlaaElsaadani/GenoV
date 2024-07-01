@@ -3,10 +3,10 @@ import "./Navbar.css";
 import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link, useLocation } from "react-router-dom";
 import { authContext } from "../../Context/authContext";
-import axios from "axios";
 import UpdateProfile from "../UpdateProfile/UpdateProfile";
 import logo from "../../assets/Images/Logo.png";
 import logoWhite from "../../assets/Images/Logo White.png";
+import ApiManager from "../../Utilies/ApiManager";
 
 const Navbar = () => {
   const [navbarCollapse, setNavbarCollapse] = useState();
@@ -14,19 +14,11 @@ const Navbar = () => {
   const location = useLocation();
   const [HomeFlag, setHomeFlag] = useState(false);
   const [profileUpdate, setProfileUpdate] = useState(false);
-  let { isRegistered, setToken, token ,user} =useContext(authContext);
+  let { isRegistered, setToken, token, user } = useContext(authContext);
   // logout function
-  const logOut = () => {
+  const logOut = async () => {
     localStorage.removeItem("token");
-    axios.post(
-      "https://genov.izitechs.com/accounts/logout",
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    let { data } = await ApiManager.logOut(token);
     setToken(null);
   };
   // specify style for nav item when refresh page
@@ -136,6 +128,7 @@ const Navbar = () => {
                 <Link
                   className="nav-link active selectedNavElement"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
+                  id="home"
                   to="/"
                 >
                   Home
@@ -178,6 +171,7 @@ const Navbar = () => {
                   className="nav-link active"
                   aria_current="OurServices"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
+                  id="ourServices"
                   to="/OurServices"
                 >
                   Our Services
@@ -217,12 +211,14 @@ const Navbar = () => {
                           fill-rule="evenodd"
                           d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                         />
-                      </svg>{" "}
-                        {(user?.emailConfirmed) ?null: (
-                          <span class="position-absolute end-0 bottom-0 translate-middle p-2 bg-danger border border-light rounded-circle" >
-                            <span class="visually-hidden">New alerts</span>
-                          </span>
-                        ) }
+                      </svg>
+                      {console.log(user, " ", user?.emailConfirmed)}
+                      {user?.emailConfirmed ||
+                      user?.emailConfirmed == undefined ? null : (
+                        <span className="position-absolute end-0 bottom-0 translate-middle p-2 bg-danger border border-light rounded-circle">
+                          <span className="visually-hidden">New alerts</span>
+                        </span>
+                      )}
                     </Link>
                   </li>
                   <li className="nav-item">

@@ -161,8 +161,8 @@ input::placeholder{
                 </thead>
                 <tbody>
                   {proteinArray.map((protein, index) => (
-                    <tr>
-                      <td>{index}</td>
+                    <tr key={index}>
+                      <td>{index+1}</td>
                       <td>{protein.proteinId}</td>
                       <td>{protein.proteinName}</td>
                       <td>{protein.bindingSites}</td>

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import ApiManager from "../Utilies/ApiManager";
 
 // Correct usage of createContext
 export const authContext = createContext();
@@ -22,14 +22,7 @@ export default function AuthProvider({ children }) {
    */
   const getCurrentUserData = async (token) => {
     try {
-      const { data } = await axios.get(
-        `https://genov.izitechs.com/accounts/currentuser`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const { data } = await ApiManager.getProfile(token);
 
       if (!data.code) {
         setUser(data);
@@ -123,15 +116,11 @@ async function checkIfSessionEnd(token) {
 
 async function checkUser(token) {
   try {
-    const response = await fetch(
-      `https://genov.izitechs.com/accounts/validateToken?token=${token}`
-    );
-    const result = await response.json();
-
-    if (!result.code) {
+    const {data} = await ApiManager.checkIfSessionEnd(token);
+    if (!data.code) {
       return {
         status: true,
-        token: result.token,
+        token: data.token,
       };
     } else {
       return { status: false };

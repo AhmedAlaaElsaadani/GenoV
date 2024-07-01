@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import style from "./Login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import axios from "axios";
 import { authContext } from "../../Context/authContext";
 import logo from "../../assets/Images/Logo.png";
 import Spinner from "../../miniComponent/Spinner/Spinner";
+import ApiManager from "../../Utilies/ApiManager";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -37,10 +37,7 @@ export default function Login() {
   };
 
   let logInUser = async (values) => {
-    const myHeaders = {
-      "Content-Type": "application/json",
-    };
-
+  
     const user = {
       EMAILORPHONE: values.emailOrPhone,
       PASSWORD: values.password,
@@ -49,13 +46,7 @@ export default function Login() {
     setLoading(true);
     try {
       console.log(user);
-      let { data } = await axios.post(
-        "https://genov.izitechs.com/accounts/login",
-        user,
-        {
-          headers: myHeaders,
-        }
-      );
+      let { data } = await ApiManager.logIn(user);
       if (data.token) {
         //success
         setToken(data.token);
@@ -84,6 +75,7 @@ export default function Login() {
       rememberMe: false,
     },
     onSubmit: logInUser,
+    validate: validateInputs,
   });
   return (
     <div className="w-50 container  ">
@@ -156,6 +148,11 @@ export default function Login() {
                 "Submit Message"
               )}
             </button>
+            <div className="w-100 d-flex justify-content-center mt-1  ">
+              <Link to="/forms/ForgotPassword" className="text-light">
+               forget your password?
+              </Link>
+            </div>
           </form>
         </div>
 

@@ -3,32 +3,25 @@ import style from "./Contact.module.css";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import logo from "../../assets/Images/Logo.png";
-import axios from "axios";
 import Spinner from "../../miniComponent/Spinner/Spinner";
+import ApiManager from "../../Utilies/ApiManager";
 
 export default function Contact() {
   const [responseFlag, setResponseFlag] = useState(false);
   const [resMessage, setResMessage] = useState(null);
-  const sendMessage = (values) => {
+  const sendMessage = async (values) => {
     let data = JSON.stringify({
       Name: values.name,
       Email: values.email,
       Message: values.message,
     });
 
-    let config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
     setResponseFlag(true);
-    axios
-      .post("https://genov.izitechs.com/contact", data, config)
+    await ApiManager.contactUs(data)
       .then((response) => {
         console.log(response);
         let res = response.data;
-        if (res.status && res.status == 200) {
+        if (res.code && res.code == 200) {
           setResMessage({ flag: true, message: res.message });
         } else {
           setResMessage({
@@ -87,9 +80,9 @@ export default function Contact() {
         }
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-        <Link to="/">
-        <img src={logo} className="my-3" alt="Logo" />
-</Link>
+          <Link to="/">
+            <img src={logo} className="my-3" alt="Logo" />
+          </Link>
           {resMessage != null ? (
             <div className={resMessage.flag ? style.success : style.error}>
               {resMessage.message}
@@ -149,13 +142,12 @@ export default function Contact() {
                 <div className="text-danger">{myFormik.errors.message}</div>
               ) : null}
             </div>
-            <button disabled={responseFlag} type="submit" className="form-button">
-
-              {responseFlag ? (
-               <Spinner/>
-              ) : (
-                "Submit Message"
-              )}
+            <button
+              disabled={responseFlag}
+              type="submit"
+              className="form-button"
+            >
+              {responseFlag ? <Spinner /> : "Submit Message"}
             </button>
           </form>
         </div>

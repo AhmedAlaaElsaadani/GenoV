@@ -13,6 +13,8 @@ import AuthProvider from "./Context/authContext";
 import InverseProtectedRoute from "./components/InverseProtectedRoute/InverseProtectedRoute";
 import OtpConfirm from "./components/Otp/OtpConfirm";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import ForgetPasswordSendEmail from "./components/ForgetPassword/ForgetPasswordSendEmail";
+import ForgetPasswordOtpConfirm from "./components/ForgetPassword/ForgetPasswordOtpConfirm";
 
 function App() {
   let router = createBrowserRouter([
@@ -30,9 +32,7 @@ function App() {
     },
     {
       path: "/forms",
-      element: (
-          <FormLayout />
-      ),
+      element: <FormLayout />,
       children: [
         {
           path: "",
@@ -51,6 +51,23 @@ function App() {
           ),
         },
         {
+          path:"ForgetPasswordSendEmail",
+          element: (
+            <InverseProtectedRoute>
+              <ForgetPasswordSendEmail />
+            </InverseProtectedRoute>
+          ),
+        },
+        {
+          path:"otp-confirm",
+          element: (
+            <InverseProtectedRoute>
+              <ForgetPasswordOtpConfirm />
+            </InverseProtectedRoute>
+          ),
+        }
+        ,
+        {
           path: "Register",
           element: (
             <InverseProtectedRoute>
@@ -60,16 +77,16 @@ function App() {
         },
         {
           path: "contact",
-          element: (
-              <Contact />
-          ),
+          element: <Contact />,
         },
         {
-          path:'emailConfirmation',
-         element:<ProtectedRoute><OtpConfirm/>
-          </ProtectedRoute>
-
-        }
+          path: "emailConfirmation",
+          element: (
+            <ProtectedRoute>
+              <OtpConfirm />
+            </ProtectedRoute>
+          ),
+        },
       ],
     },
   ]);
