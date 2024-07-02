@@ -7,15 +7,16 @@ import style from "./ForgetPassword.module.css";
 import ApiManager from "../../Utilies/ApiManager";
 
 export default function ForgetPasswordOtpConfirm() {
-  const [responseFlag, setResponseFlag] = useState(false);
-  const [resMessage, setResMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [canResend, setCanResend] = useState(false);
   const [countdown, setCountdown] = useState(90); // 1.5 minutes
   const otpRefs = useRef([]);
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email;
-
 
   useEffect(() => {
     let timer;
@@ -27,36 +28,51 @@ export default function ForgetPasswordOtpConfirm() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
+  const sendOtpAgain = async () => {
+    try {
+      let { data } = await ApiManager.forgotPasswordSendOtpToEmail(email);
+      if (data.code && data.code === 200) {
+        setMessage(data.message);
+        setErrorMessage("");
+      }
+      console.log("OTP sent");
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      let { data } = error.response;
+      if (data.code && data.code === 400) {
+        setErrorMessage(data.message);
+        setMessage("");
+      }
+    }
+  };
+
   const resendOtp = async () => {
     setCanResend(false);
     setCountdown(90); // Reset the countdown
-    await sendInitialOtp();
+    await sendOtpAgain();
   };
 
   const sendOtp = async (values) => {
     const otp = values.otp.join("");
 
-    setResponseFlag(true);
+    setLoading(true);
     try {
-      const response = await ApiManager.otpConfirm({ otp, email });
-      const res = response.data;
-      if (res.success) {
-        setResMessage({ flag: true, message: res.message });
-        navigate("/reset-password", { state: { email } });
+      const { data } = await ApiManager.confirmOtpForResetPassword(  otp, email );
+      if (data.code && data.code === 200) {
+        setMessage("OTP verified successfully");
+        setErrorMessage("");
+        navigate("/forms/reset-password", { state: { email , token:data.token } });
       } else {
-        setResMessage({
-          flag: false,
-          message: "Invalid OTP, please try again.",
-        });
+        setErrorMessage(data.message);
+        setMessage("");
       }
-      setResponseFlag(false);
+      setLoading(false);
     } catch (error) {
       console.error("There was an error verifying the OTP!", error);
-      setResponseFlag(false);
-      setResMessage({
-        flag: false,
-        message: "Something went wrong, please try again later.",
-      });
+      let { data } = error.response;
+      setLoading(false);
+      setErrorMessage(data.message);
+      setMessage("");
     }
   };
 
@@ -111,11 +127,9 @@ export default function ForgetPasswordOtpConfirm() {
           <Link to="/">
             <img src={logo} className="my-3" alt="Logo" />
           </Link>
-          {resMessage && (
-            <div className={resMessage.flag ? style.success : style.error}>
-              {resMessage.message}
-            </div>
-          )}
+          {message && <div className="text-success">{message}</div>}
+          {errorMessage && <div className="text-danger">{errorMessage}</div>}
+
           <form onSubmit={myFormik.handleSubmit} className="w-75">
             <div
               className="mb-3 d-flex justify-content-between"
@@ -139,12 +153,8 @@ export default function ForgetPasswordOtpConfirm() {
             {myFormik.errors.otp && myFormik.touched.otp && (
               <div className="text-danger">{myFormik.errors.otp}</div>
             )}
-            <button
-              disabled={responseFlag}
-              type="submit"
-              className="form-button"
-            >
-              {responseFlag ? <Spinner /> : "Submit OTP"}
+            <button disabled={loading} type="submit" className="form-button">
+              {loading ? <Spinner /> : "Submit OTP"}
             </button>
           </form>
           <div className="mt-3">

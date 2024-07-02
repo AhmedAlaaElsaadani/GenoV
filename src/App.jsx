@@ -15,6 +15,7 @@ import OtpConfirm from "./components/Otp/OtpConfirm";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import ForgetPasswordSendEmail from "./components/ForgetPassword/ForgetPasswordSendEmail";
 import ForgetPasswordOtpConfirm from "./components/ForgetPassword/ForgetPasswordOtpConfirm";
+import ForgetPasswordResetPassword from "./components/ForgetPassword/ForgetPasswordResetPassword";
 
 function App() {
   let router = createBrowserRouter([
@@ -51,7 +52,7 @@ function App() {
           ),
         },
         {
-          path:"ForgetPasswordSendEmail",
+          path: "ForgetPasswordSendEmail",
           element: (
             <InverseProtectedRoute>
               <ForgetPasswordSendEmail />
@@ -59,14 +60,21 @@ function App() {
           ),
         },
         {
-          path:"otp-confirm",
+          path: "otp-confirm",
           element: (
             <InverseProtectedRoute>
               <ForgetPasswordOtpConfirm />
             </InverseProtectedRoute>
           ),
-        }
-        ,
+        },
+        {
+          path: "reset-password",
+          element: (
+            <InverseProtectedRoute>
+              <ForgetPasswordResetPassword />
+            </InverseProtectedRoute>
+          ),
+        },
         {
           path: "Register",
           element: (

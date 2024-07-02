@@ -11,6 +11,7 @@ export default function ForgetPasswordSendEmail() {
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  
 
   const validate = (values) => {
     const errors = {};
@@ -33,7 +34,8 @@ export default function ForgetPasswordSendEmail() {
       if (data.code&&data.code===200) {
         setMessage(data.message);
         setTimeout(() => {
-          navigate("/otp-confirm"); // Navigate to the OTP confirmation page
+          // sendEmail with your navigate
+          navigate("/forms/otp-confirm", { state: { email: values.email  } });
         }, 2000);
       }
     } catch (error) {

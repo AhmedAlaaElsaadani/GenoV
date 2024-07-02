@@ -124,27 +124,63 @@ export default class ApiManager {
       },
     });
     return axiosResult;
-  };
+  }
   /**
    * check if session is still valid
    * @param {string} token
    */
-    static async checkIfSessionEnd(token) {
-        let axiosResult = await axios.get(baseUrl + `/accounts/validateToken?token=${token}`);
-        console.log(axiosResult);
-        return axiosResult;
-    }
-    /**
-     * send email to send reset password otp to user
-     * @param {string} email
-     * @returns {object} response
-     * 
-     */
-    static async forgotPasswordSendOtpToEmail(email) {        
-        let axiosResult = await axios.post(baseUrl + `/accounts/SendOTPResetPassword?email=${email}` );
-        console.log(axiosResult);
-        return axiosResult;
-    }
+  static async checkIfSessionEnd(token) {
+    let axiosResult = await axios.get(
+      baseUrl + `/accounts/validateToken?token=${token}`
+    );
+    console.log(axiosResult);
+    return axiosResult;
+  }
+  /**
+   * send email to send reset password otp to user
+   * @param {string} email
+   * @returns {object} response
+   *
+   */
+  static async forgotPasswordSendOtpToEmail(email) {
+    let axiosResult = await axios.post(
+      baseUrl + `/accounts/SendOTPResetPassword?email=${email}`
+    );
+    console.log(axiosResult);
+    return axiosResult;
+  }
+  /**
+   * confirm otp for reset password
+   * @param {string} otp
+   * @param {string} email
+   * @returns {object} response
+   */
+  static async confirmOtpForResetPassword(otp, email) {
+    let axiosResult = await axios.post(
+      baseUrl + `/accounts/ConfirmResetPasswordOTP?OTP=${otp}&email=${email}`
+    );
+    console.log(axiosResult);
+    return axiosResult;
+  }
+  /**
+   * reset password
+   * @param {object} data
+   * @returns {object} response
+   */
+  static async resetPassword(email, password, token) {
+    let data = {
+      email: email,
+      password: password,
+      token: token,
+    };
+
+    let axiosResult = await axios.post(
+      baseUrl + `/accounts/ResetPassword`,
+      data
+    );
+    console.log(axiosResult);
+    return axiosResult;
+  }
 
   /**
    * Contact us

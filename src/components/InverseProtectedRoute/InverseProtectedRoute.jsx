@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import { authContext } from "../../Context/authContext";
 
 export default function InverseProtectedRoute(props) {
-  const { isRegistered, setToken } = useContext(authContext);
+  const { isRegistered } = useContext(authContext);
 
   if (isRegistered) {
     return <Navigate to="/" />;

@@ -37,7 +37,6 @@ export default function Login() {
   };
 
   let logInUser = async (values) => {
-  
     const user = {
       EMAILORPHONE: values.emailOrPhone,
       PASSWORD: values.password,
@@ -70,7 +69,7 @@ export default function Login() {
   };
   const myFormik = useFormik({
     initialValues: {
-      email: "",  
+      email: "",
       password: "",
       rememberMe: false,
     },
@@ -86,8 +85,9 @@ export default function Login() {
         }
       >
         <div className=" p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-        <Link to="/">
-        <img src={logo} className="my-3" alt="Logo" /></Link>
+          <Link to="/">
+            <img src={logo} className="my-3" alt="Logo" />
+          </Link>
           {errorMessage ? (
             <div className="text-danger">{errorMessage}</div>
           ) : null}
@@ -142,15 +142,11 @@ export default function Login() {
               />
             </div>
             <button disabled={loading} type="submit" className="form-button">
-              {loading ? (
-                <Spinner/>
-              ) : (
-                "Submit Message"
-              )}
+              {loading ? <Spinner /> : "Submit Message"}
             </button>
             <div className="w-100 d-flex justify-content-center mt-1  ">
-              <Link to="/forms/ForgotPassword" className="text-light">
-               forget your password?
+              <Link to="/forms/ForgetPasswordSendEmail" className="text-light">
+                forget your password?
               </Link>
             </div>
           </form>
