@@ -18,8 +18,8 @@ const Navbar = () => {
   // logout function
   const logOut = async () => {
     localStorage.removeItem("token");
-    let { data } = await ApiManager.logOut(token);
     setToken(null);
+    let { data } = await ApiManager.logOut(token);
   };
   // specify style for nav item when refresh page
   const specifyStyleForNav = () => {
@@ -88,21 +88,20 @@ const Navbar = () => {
       <nav
         id="navBarMain"
         className={
-          "navbar font navbar-expand-lg  position-fixed px-4 pt-1  top-0  z-3 w-100 " +
+          "navbar font navbar-expand-lg  position-fixed px-4 pt-1  top-0  z-3 w-100 bg-responsiveTransparentAndPrimColorWhenPhone " +
           (scrolled && HomeFlag
             ? "homeNavbarTransparent"
             : "backgroundMainNavbar")
         }
-        data-bs-theme="light"
+        data-bs-theme="dark"
       >
         <div
-          className="container-fluid mx-3 d-flex justify-content-between 
+          className="container-fluid  d-flex justify-content-between 
                 "
         >
           <Link className="navbar-brand py-3 px-2 rounded-3" to="/">
             <img
               src={scrolled && HomeFlag ? logo : logoWhite}
-              style={{ width: "125px" }}
               alt="logo website "
             />
           </Link>
@@ -163,7 +162,7 @@ const Navbar = () => {
                   onClick={(e) => changeStyleClassFotNavItem(e)}
                   to="/PreCalc"
                 >
-                  Pre-Calcp
+                  Pre-Calc
                 </Link>
               </li>
               <li className="nav-item ">
@@ -182,7 +181,7 @@ const Navbar = () => {
                   className="nav-link active"
                   aria_current="Contact"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
-                  to="forms/Contact"
+                  to="accounts/Contact"
                 >
                   Contact
                 </Link>
@@ -239,17 +238,17 @@ const Navbar = () => {
                       className="nav-link active"
                       aria_current="Login"
                       onClick={(e) => changeStyleClassFotNavItem(e)}
-                      to="/forms/Login"
+                      to="/accounts/Login"
                     >
                       Login
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link
-                      className="nav-link active"
+                      className="nav-link active "
                       aria_current="Register"
                       onClick={(e) => changeStyleClassFotNavItem(e)}
-                      to="/forms/Register"
+                      to="/accounts/Register"
                     >
                       Register
                     </Link>

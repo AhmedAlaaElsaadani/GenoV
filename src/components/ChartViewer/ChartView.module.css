@@ -1,0 +1,20 @@
+.chart-container{
+     width: 100%;
+     overflow-x: auto; 
+}
+.chart-container::-webkit-scrollbar {
+    width: 8px; /* Adjust the width of the scrollbar */
+}
+
+.chart-container::-webkit-scrollbar-thumb {
+    background: var(--span-color);
+    border-radius: 20px;
+}
+
+.chart-container::-webkit-scrollbar-thumb:hover {
+    background: var(--span-color);
+}
+
+.chart-container::-webkit-scrollbar-track {
+    background: var(--blackToWhite);
+}

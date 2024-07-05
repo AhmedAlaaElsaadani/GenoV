@@ -1,0 +1,62 @@
+.card {
+  /* position-relative text-center */
+  position: relative;
+  text-align: center;
+  min-height: 35vh;
+}
+.btn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  bottom: -30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  margin-top: 10px;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  transition: 0.3s;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+/* Hover effects */
+.btn:hover {
+  background-color: #45a049;
+}
+
+/* Accessibility */
+.btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+/* 
+responsive */
+}
+/* Responsive styles */
+@media (max-width: 768px) {
+  .btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn {
+    padding: 10px 20px;
+    font-size: 12px;
+  }
+}

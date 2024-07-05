@@ -4,16 +4,15 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
 export default function FormLayout() {
   return (
-    <section
-      className={
-        style.forms +
-        " bg-dark  d-flex justify-content-center align-items-center vh-100"
-      }
-    >
+    <section className={style.forms}>
       <div className={style.layer}>
-        <Outlet />
+        <div className={"container  " + style.card}>
+          <div className={"row "}>
+            <Outlet />
+          </div>
+        </div>
       </div>
-      <Footer/>
+      <Footer />
     </section>
   );
 }

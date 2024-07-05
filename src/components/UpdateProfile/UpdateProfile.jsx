@@ -165,7 +165,7 @@ export default function UpdateProfile({ setProfileUpdate, profileUpdate }) {
               }
             >
               you need to validate your email
-              <Link to={"/forms/emailConfirmation"}>Validate Email</Link>
+              <Link to={"/accounts/emailConfirmation"}>Validate Email</Link>
             </div>
           )}
         </form>

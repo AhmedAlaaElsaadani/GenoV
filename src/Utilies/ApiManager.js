@@ -1,7 +1,8 @@
 import axios from "axios";
+import { HfInference } from "@huggingface/inference";
 
-const baseUrl = "https://genov.izitechs.com";
-
+const baseUrl = "https://ppi.izitechs.com";
+const inference = new HfInference("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");
 export default class ApiManager {
   // User Apia <-- Login, Register, Logout , Update Profile , Get Profile ,otpConfirm , ResendOtp , ForgotPassword , ResetPassword -->
   /**
@@ -170,13 +171,37 @@ export default class ApiManager {
   static async resetPassword(email, password, token) {
     let data = {
       email: email,
-      password: password,
+      new_password: password,
       token: token,
     };
 
     let axiosResult = await axios.post(
       baseUrl + `/accounts/ResetPassword`,
       data
+    );
+    console.log(axiosResult);
+    return axiosResult;
+  }
+  // services Api <-- getPreCalc--> <-- search -->  <-- useModel --> <-- contactUs -->
+  /**
+   * get precalc
+   * @returns {object} response
+   */
+  static async getPreCalc(param) {
+    let axiosResult = await axios.get(
+      baseUrl + "/search/precalculated?" + param
+    );
+    console.log(axiosResult);
+    return axiosResult;
+  }
+  /**
+   * search for protein
+   * @param {string} param
+   * @returns {object} response
+   */
+  static async search(param) {
+    let axiosResult = await axios.post(
+      baseUrl + `/search?${param}&ignore=true`
     );
     console.log(axiosResult);
     return axiosResult;
@@ -197,5 +222,29 @@ export default class ApiManager {
     let axiosResult = await axios.post(baseUrl + "/contact", data, config);
     console.log(axiosResult);
     return axiosResult;
+  }
+
+  /**
+   * Sends a user message to the model and retrieves the response.
+   * @param {string} userMessage - The message from the user.
+   * @returns {Promise<string>} - The model's response.
+   */
+  static async getChatCompletion(userMessage) {
+    let response = "";
+
+    try {
+      for await (const chunk of inference.chatCompletionStream({
+        model: "meta-llama/Meta-Llama-3-8B-Instruct",
+        messages: [{ role: "user", content: userMessage }],
+        max_tokens: 500,
+      })) {
+        response += chunk.choices[0]?.delta?.content || "";
+      }
+
+      return response;
+    } catch (error) {
+      console.error("Error fetching chat completion:", error);
+      return "Sorry, I couldn't process your request.";
+    }
   }
 }

@@ -1,3 +1,11 @@
+/*--------------indexing------------
+1. updateProfile
+2. formLayer 
+3. validate Message
+4. responsive
+----------------------------------*/
+
+/* 1. updateProfile */
 .updateProfile {
   width: 100%;
   top: 0;
@@ -12,6 +20,7 @@
   align-items: center;
   flex-direction: column;
 }
+/* 2. form Layer */
 .formLayer {
   width: 25%;
   background-color: var(--form-bg-updateProfile);
@@ -19,12 +28,44 @@
   justify-content: center;
   align-items: center;
 }
-.formLayer label{
-  color: var(--whiteToBlack);
 
+.formLayer label {
+  color: var(--whiteToBlack);
 }
+/* 3. validate message */
 .validateMessage {
   color: red;
   font-size: 18px;
   text-align: center;
+}
+
+/* 4. responsive */
+@media (max-width: 991px) {
+  .formLayer {
+    width: 50%;
+  }
+
+  .validateMessage {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .formLayer {
+    width: 70%;
+  }
+
+  .validateMessage {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .formLayer {
+    width: 90%;
+  }
+
+  .validateMessage {
+    font-size: 12px;
+  }
 }

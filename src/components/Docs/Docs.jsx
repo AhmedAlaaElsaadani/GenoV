@@ -9,14 +9,14 @@ export default function Docs() {
     <section className={style.Docs}>
         <div className="container g-2">
           <div className="row ">
-            <div className=" col-md-6">
+            <div className={style.image+" col-lg-6"}>
               <img
                 src={DocsImage}
                 className="w-100 h-100"
                 alt="cartoon scientist Image "
               />
             </div>
-            <div className={"col-md-6 "}>
+            <div className={"col-lg-6 "+style.text}>
               <div className={style.bgText}>
                 <p>
                   Proteins are complex bio-molecules, carry diverse cellular

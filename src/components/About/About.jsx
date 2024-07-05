@@ -7,9 +7,9 @@ export default function About() {
   return (
     <CommonBackground>
     <section className={style.About}>
-        <div className="container g-2">
-          <div className="row ">
-            <div className={"col-md-6 "}>
+        <div className="container gy-2 ">
+          <div className="row">
+            <div className={"col-lg-6 "+style.text}>
               <div className={style.bgText}>
               <p>
                 Understanding how proteins interact with each other at specific
@@ -28,7 +28,7 @@ export default function About() {
               </p>
               </div>
             </div>
-            <div className=" col-md-6">
+            <div className={style.image+" col-lg-6"}>
               <img src={AboutImage} className="w-100 h-100" alt="cartoon scientist Image " />
             </div>
           </div>

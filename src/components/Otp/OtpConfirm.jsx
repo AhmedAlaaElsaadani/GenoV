@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import style from "./OtpConfirm.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import Spinner from "../../miniComponent/Spinner/Spinner";
@@ -55,9 +54,7 @@ export default function OtpConfirm() {
         if (res.code && res.code === 200) {
           setUser({ ...user, emailConfirmed: true });
           setResMessage({ flag: true, message: res.message });
-          if (res.emailConfirmation) {
-            navigate("/");
-          }
+          setTimeout(() => navigate("/"), 3000);
         } else {
           setResMessage({
             flag: false,
@@ -121,77 +118,68 @@ export default function OtpConfirm() {
   }
 
   return (
-    <div className="w-50 container">
-      <div
-        className={
-          "row bg-dark shadow rounded-5 overflow-hidden text-white " +
-          style.Contact
-        }
-      >
-        <div className="p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
-          <Link to="/">
-            <img src={logo} className="my-3" alt="Logo" />
-          </Link>
-          {resMessage && (
-            <div className={resMessage.flag ? style.success : style.error}>
-              {resMessage.message}
-            </div>
-          )}
-          <form onSubmit={myFormik.handleSubmit} className="w-75">
-            <div
-              className="mb-3 d-flex justify-content-between"
-              onPaste={handlePaste}
-            >
-              {myFormik.values.otp.map((_, index) => (
-                <input
-                  key={index}
-                  ref={(el) => (otpRefs.current[index] = el)}
-                  id={`otp-${index}`}
-                  type="text"
-                  className="form-control text-center mx-1"
-                  maxLength="1"
-                  onChange={(e) => handleChange(e, index)}
-                  onBlur={myFormik.handleBlur}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
-                  value={myFormik.values.otp[index]}
-                />
-              ))}
-            </div>
-            {myFormik.errors.otp && myFormik.touched.otp && (
-              <div className="text-danger">{myFormik.errors.otp}</div>
-            )}
-            <button
-              disabled={responseFlag}
-              type="submit"
-              className="form-button"
-            >
-              {responseFlag ? <Spinner /> : "Submit OTP"}
-            </button>
-          </form>
-          <div className="mt-3">
-            {canResend ? (
-              <button onClick={resendOtp} className="btn btn-secondary">
-                Resend OTP
-              </button>
-            ) : (
-              <span>Please wait {countdown} seconds to resend</span>
-            )}
+    <>
+      <div className="col-md-6">
+        <Link to="/">
+          <img src={logo} className="my-3" alt="Logo" />
+        </Link>
+        {resMessage && (
+          <div
+            className={
+              "text-center " +
+              (resMessage.flag ? "text-success " : "text-danger ")
+            }
+          >
+            {resMessage.message}
           </div>
-        </div>
-        <div
-          className="bg-warning d-flex justify-content-center align-items-center gap-3 flex-column col-md-6"
-          style={{ borderRadius: "150px 0 0 150px" }}
-        >
-          <h2>Support</h2>
-          <h3>Welcome to Support of</h3>
-          <p>
-            Geno<span>V</span>
-          </p>
-          <Link to="/" className="btn btn-outline-light">
-            Return Back To Home
-          </Link>
+        )}
+        <form onSubmit={myFormik.handleSubmit} className="w-75">
+          <div
+            className="mb-3 d-flex justify-content-between"
+            onPaste={handlePaste}
+          >
+            {myFormik.values.otp.map((_, index) => (
+              <input
+                key={index}
+                ref={(el) => (otpRefs.current[index] = el)}
+                id={`otp-${index}`}
+                type="text"
+                className="form-control text-center mx-1"
+                maxLength="1"
+                onChange={(e) => handleChange(e, index)}
+                onBlur={myFormik.handleBlur}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                value={myFormik.values.otp[index]}
+              />
+            ))}
+          </div>
+          {myFormik.errors.otp && myFormik.touched.otp && (
+            <div className="text-danger">{myFormik.errors.otp}</div>
+          )}
+          <button disabled={responseFlag} type="submit" className="form-button">
+            {responseFlag ? <Spinner /> : "Submit OTP"}
+          </button>
+        </form>
+        <div className="mt-3">
+          {canResend ? (
+            <button onClick={resendOtp} className="btn btn-secondary">
+              Resend OTP
+            </button>
+          ) : (
+            <span>Please wait {countdown} seconds to resend</span>
+          )}
         </div>
       </div>
-    </div>
+      <div className="bg-warning  col-md-6">
+        <h2>Support</h2>
+        <h3>Welcome to Support of</h3>
+        <p>
+          Geno<span>V</span>
+        </p>
+        <Link to="/" className="btn btn-outline-light">
+          Return Back To Home
+        </Link>
+      </div>
+    </>
   );
 }

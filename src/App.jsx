@@ -16,6 +16,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import ForgetPasswordSendEmail from "./components/ForgetPassword/ForgetPasswordSendEmail";
 import ForgetPasswordOtpConfirm from "./components/ForgetPassword/ForgetPasswordOtpConfirm";
 import ForgetPasswordResetPassword from "./components/ForgetPassword/ForgetPasswordResetPassword";
+import ErrorComp from "./components/Error/ErrorComp";
 
 function App() {
   let router = createBrowserRouter([
@@ -30,9 +31,11 @@ function App() {
         { path: "PreCalc", element: <PreCalc /> },
         { path: "OurServices", element: <OurServices /> },
       ],
+      errorElement: <ErrorComp/>,
+
     },
     {
-      path: "/forms",
+      path: "/accounts",
       element: <FormLayout />,
       children: [
         {
@@ -96,7 +99,9 @@ function App() {
           ),
         },
       ],
+      errorElement: <ErrorComp/>
     },
+    
   ]);
 
   return (

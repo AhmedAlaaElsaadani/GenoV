@@ -1,107 +1,131 @@
-@import url('https://fonts.googleapis.com/css2?family=Baumans&display=swap');
-:root{
-    --primary-color: #F1AB32;
-    --navbarPrimColor: #F1AB32;
-    --form-prim-color:  #363636c7;
-    --blackToWhite: #1E1E1E;
-    --whiteToBlack: #f1f1f1;
-    --disabled-color:rgba(128, 123, 123, 0.684);
-    /*
+@import url("https://fonts.googleapis.com/css2?family=Baumans&display=swap");
+:root {
+  --primary-color: #f1ab32;
+  --navbarPrimColor: #f1ab32;
+  --form-prim-color: #363636c7;
+  --blackToWhite: #1e1e1e;
+  --whiteToBlack: #f1f1f1;
+  --disabled-color: rgba(128, 123, 123, 0.684);
+  /* 
+  text bg color 
+   */
+   --text-bg-color: #f1ab3283;
+  /*
     preCalc 
     Our Services 
      */
-    --secondary-color: #f1be65;
-    --table-background:#363636;
-    --thead-background:#443D31;
-    --row-background:#555353;
-    --footer-text-color: #949494c7;
-    --span-color:#F4682D;
-    /* 
+  --secondary-color: #f1be65;
+  --table-background: #363636;
+  --thead-background: #443d31;
+  --row-background: #555353;
+  --footer-text-color: #949494c7;
+  --span-color: #f4682d;
+  --pop-Details-even-row: #5b4d35;
+  --pop-Details-button:var(--span-color);
+  /*
     Update profile */
-    --form-bg-updateProfile:  #363636;
+  --form-bg-updateProfile: #363636;
+  /* forms */
+  --form-bg-color: #212529;
+}
+body {
+  font-family: "Baumans", system-ui;
+  background-color: var(--primary-color);
+  font-weight: 400;
+  overflow: hidden;
+}
+#root {
+  position: relative;
+}
 
+button {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
 }
-body{
-       font-family: "Baumans", system-ui;
-        font-weight: 400; 
-}
-
-button{
-    font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    -ms-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
-}
-button:active{
-    transform: scale(0.9);
-    -webkit-transform: scale(0.9);
-    -moz-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    -o-transform: scale(0.9);
+button:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
 }
 /* because i use sometimes liknks like buttons */
-.linkNav:hover{
-    transition: all 0.3s ease;
-    transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
+.linkNav:hover {
+  transition: all 0.3s ease;
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
 }
-.linkNav:active{
-    transform: scale(0.9);
-    -webkit-transform: scale(0.9);
-    -moz-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    -o-transform: scale(0.9);
+.linkNav:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
 }
-
 
 button.form-button {
-    background-color: var(--primary-color);
-    width: 100%;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.1rem;
-    margin-top: 12px;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out;
-    -moz-transition: all 1s ease-in-out;
-    -ms-transition: all 1s ease-in-out;
-    -o-transition: all 1s ease-in-out;
-  }
-  button.form-button:hover {
-    background-color: var(--secondary-color);
-  }
-  button.form-button:disabled {
-    background-color: var(--disabled-color);
-    cursor : wait;
-  
-  }
-::selection{
-    background-color: var(--primary-color);
-    color: white;
+  background-color: var(--primary-color);
+  width: 100%;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin-top: 12px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  transition: all 1s ease-in-out;
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+}
+button.form-button:hover {
+  background-color: var(--secondary-color);
+}
+button.form-button:disabled {
+  background-color: var(--disabled-color);
+  cursor: wait;
+}
+::selection {
+  background-color: var(--primary-color);
+  color: white;
+}
+/* scrollbar  */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--blackToWhite);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
 }
 
-/* Remove it after finshing pre calc  */
-.test input::placeholder{
-    color: white !important;
-}

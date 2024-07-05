@@ -1,62 +1,112 @@
-.Hero{
-    background-image: url("../Images/Background.png");
-    background-size: cover;
-    background-position: center center;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.2rem;
-    text-shadow: 0 0 0.5rem black;
+/*
+--------------indexing------------
+1. Hero
+2. layer 
+3. Main Button
+4. responsive
+----------------------------------
+*/
+
+/* Hero */
+.Hero {
+  background-image: url("../Images/Background.png");
+  background-size: cover;
+  background-position: center center;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  text-shadow: 0 0 0.5rem black;
 }
-.layer{
-    background-color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}   
+/* layer */
+.layer {
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
 .Hero .layer h1 {
-    font-size: 3rem;
-    margin: 1rem;
+  font-size: 3rem;
+  margin: 1rem;
 }
 .Hero .layer p {
-    font-size: 1rem;
-    margin: 1rem;
+  font-size: 1rem;
+  margin: 1rem;
 }
-.Hero .layer .button {
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    -ms-border-radius: 12px;
-    -o-border-radius: 12px;
-    background-color: var(--primary-color);
-    color: white;
+/* Main Button */
+.Hero .layer .mainButton {
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+  background-color: var(--primary-color);
+  box-shadow: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+}
+.Hero .layer .mainButton:hover {
+  background-color: var(--secondary-color);
+}
+.Hero .layer .mainButton:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
+}
+/* responsive */
+@media (max-width: 1024px) {
+  .Hero .layer h1 {
+    font-size: 2.5rem;
+  }
+  .Hero .layer p {
+    font-size: 0.9rem;
+  }
+  .Hero .layer .button {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .Hero .layer h1 {
     font-size: 2rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.1rem;
-    padding: 0.5rem 1rem;
-    margin: 1rem;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    -webkit-transition: all 0.4s ease;
-    -moz-transition: all 0.4s ease;
-    -ms-transition: all 0.4s ease;
-    -o-transition: all 0.4s ease;
+  }
+  .Hero .layer p {
+    font-size: 0.8rem;
+  }
+  .Hero .layer .button {
+    font-size: 1.5rem;
+  }
 }
-.Hero .layer .button:hover {
-    background-color: var(--secondary-color);
-}
-.Hero .layer .button:active {
-    transform: scale(0.9);
-    -webkit-transform: scale(0.9);
-    -moz-transform: scale(0.9);
-    -ms-transform: scale(0.9);
-    -o-transform: scale(0.9);
+
+@media (max-width: 480px) {
+  .Hero .layer h1 {
+    font-size: 1.5rem;
+  }
+  .Hero .layer p {
+    font-size: 0.7rem;
+  }
+  .Hero .layer .button {
+    font-size: 1.2rem;
+    padding: 0.5rem 0.8rem;
+  }
 }

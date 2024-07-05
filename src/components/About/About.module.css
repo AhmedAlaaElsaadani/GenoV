@@ -1,15 +1,51 @@
-.About  .bgText{
-    color: var(--whiteToBlack);
-    background-color: #f1ab3283;
-    font-size: 1.7rem;
-    font-weight: 800;
-    letter-spacing: 0.01rem;
-    text-align: start;
-    line-height: 2rem;
-    padding: 12px;
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-    -ms-border-radius: 12px;
-    -o-border-radius: 12px;
+/*
+--------------indexing------------
+1. About
+2. text 
+3. responsive
+----------------------------------
+*/
+
+/* About */
+
+.About {
+  overflow: hidden;
+}
+/* text */
+.About .bgText {
+  color: var(--whiteToBlack);
+  background-color: var(--text-bg-color);
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: 0.01rem;
+  text-align: start;
+  line-height: 2rem;
+  padding: 12px;
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
+}
+/* responsive */
+@media (max-width: 991px) {
+  .About .bgText {
+    font-size: 1.5rem;
+    padding: 10px;
+  }
+
+  .About .text {
+    order: 1;
+    margin: 20px 0;
+  }
+  .About .image {
+    order: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .About .bgText {
+    font-size: 1.2rem;
+    padding: 10px;
+  }
 }

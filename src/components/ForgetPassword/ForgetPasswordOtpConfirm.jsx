@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { useFormik } from "formik";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import logo from "../../assets/Images/Logo.png";
-import style from "./ForgetPassword.module.css";
 import ApiManager from "../../Utilies/ApiManager";
 
 export default function ForgetPasswordOtpConfirm() {
@@ -57,11 +56,13 @@ export default function ForgetPasswordOtpConfirm() {
 
     setLoading(true);
     try {
-      const { data } = await ApiManager.confirmOtpForResetPassword(  otp, email );
+      const { data } = await ApiManager.confirmOtpForResetPassword(otp, email);
       if (data.code && data.code === 200) {
         setMessage("OTP verified successfully");
         setErrorMessage("");
-        navigate("/forms/reset-password", { state: { email , token:data.token } });
+        navigate("/accounts/reset-password", {
+          state: { email, token: data.token },
+        });
       } else {
         setErrorMessage(data.message);
         setMessage("");
@@ -114,16 +115,10 @@ export default function ForgetPasswordOtpConfirm() {
       otpRefs.current[index - 1].focus();
     }
   };
-
-  return (
-    <div className="w-50 container">
-      <div
-        className={
-          "row bg-dark shadow rounded-5 overflow-hidden text-white " +
-          style.ForgetPassword
-        }
-      >
-        <div className="p-5 col-md-6 d-flex flex-column justify-content-center align-items-center">
+  if (email) {
+    return (
+      <>
+        <div className=" col-md-6">
           <Link to="/">
             <img src={logo} className="my-3" alt="Logo" />
           </Link>
@@ -167,10 +162,7 @@ export default function ForgetPasswordOtpConfirm() {
             )}
           </div>
         </div>
-        <div
-          className="bg-warning d-flex justify-content-center align-items-center gap-3 flex-column col-md-6"
-          style={{ borderRadius: "150px 0 0 150px" }}
-        >
+        <div className="bg-warning  col-md-6">
           <h2>Support</h2>
           <h3>Welcome to Support of</h3>
           <p>
@@ -180,7 +172,9 @@ export default function ForgetPasswordOtpConfirm() {
             Return Back To Home
           </Link>
         </div>
-      </div>
-    </div>
-  );
+      </>
+    );
+  } else {
+    return <Navigate to="/" />;
+  }
 }

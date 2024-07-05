@@ -2,6 +2,7 @@ import React from "react";
 import style from "./Hero.module.css";
 import { Link } from "react-router-dom";
 export default function Hero() {
+  // change the navbar selected element when the user clicks on the button
   const changeNavbarStyle = () => {
     
     document.getElementById("ourServices").classList.add("selectedNavElement");
@@ -17,7 +18,7 @@ export default function Hero() {
         </p>
         <Link
          to="/OurServices"
-          className={style.button}
+          className={style.mainButton}
           onClick={changeNavbarStyle}
         
         >
