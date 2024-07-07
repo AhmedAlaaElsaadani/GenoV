@@ -30,9 +30,9 @@
 }
 body {
   font-family: "Baumans", system-ui;
+  overflow-x: hidden;
   background-color: var(--primary-color);
   font-weight: 400;
-  overflow: hidden;
 }
 #root {
   position: relative;

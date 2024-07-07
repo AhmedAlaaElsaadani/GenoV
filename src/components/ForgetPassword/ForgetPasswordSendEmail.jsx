@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ApiManager from "../../Utilies/ApiManager";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import logo from "../../assets/Images/Logo.png";
+import { motion } from "framer-motion";
 
 export default function ForgetPasswordSendEmail() {
   const [loading, setLoading] = useState(false);
@@ -51,10 +52,17 @@ export default function ForgetPasswordSendEmail() {
     validate,
     onSubmit: handleForgotPassword,
   });
-
   return (
     <>
-      <div className="col-md-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+        }}
+        className="col-md-6"
+      >
         <Link to="/">
           <img src={logo} className="my-3" alt="Logo" />
         </Link>
@@ -82,8 +90,20 @@ export default function ForgetPasswordSendEmail() {
             {loading ? <Spinner /> : "Send OTP"}
           </button>
         </form>
-      </div>
-      <div className="bg-warning col-md-6 ">
+      </motion.div>
+      <motion.div
+        initialValuesinitial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, x: 20 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.5, delay: 0.3 },
+          },
+        }}
+        className="bg-warning col-md-6 "
+      >
         <h2>Forgot Password</h2>
         <h3>Recover your account</h3>
         <p>
@@ -97,7 +117,7 @@ export default function ForgetPasswordSendEmail() {
             Home
           </Link>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

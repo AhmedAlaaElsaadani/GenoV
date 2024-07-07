@@ -6,6 +6,7 @@ import Spinner from "../../miniComponent/Spinner/Spinner";
 import logo from "../../assets/Images/Logo.png";
 
 import * as Yup from "yup";
+import { motion } from "framer-motion";
 
 export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
@@ -70,69 +71,87 @@ export default function ResetPassword() {
   });
   if (token)
     return (
-        <>
-          <div className="col-md-6">
-            <Link to="/">
-              <img src={logo} className="my-3" alt="Logo" />
-            </Link>
-            {errorMessage && <div className="text-danger">{errorMessage}</div>}
-            {message && <div className="text-success">{message}</div>}
-            <form onSubmit={formik.handleSubmit} className="w-75">
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  New Password
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.password}
-                  type="password"
-                  id="password"
-                  placeholder="Enter your new password"
-                  className="form-control"
-                />
-                {formik.errors.password && formik.touched.password ? (
-                  <div className="text-danger">{formik.errors.password}</div>
-                ) : null}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="confirmPassword" className="form-label">
-                  Confirm Password
-                </label>
-                <input
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.confirmPassword}
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Confirm your new password"
-                  className="form-control"
-                />
-                {formik.errors.confirmPassword &&
-                formik.touched.confirmPassword ? (
-                  <div className="text-danger">
-                    {formik.errors.confirmPassword}
-                  </div>
-                ) : null}
-              </div>
-              <button type="submit" className="form-button" disabled={loading}>
-                {loading ? <Spinner /> : "Reset Password"}
-              </button>
-            </form>
-          </div>
-          <div
-            className="bg-warning col-md-6"
-          >
-            <h2>Reset Password</h2>
-            <h3>Enter your new password</h3>
-            <p>
-              Geno<span>V</span>
-            </p>
-            <Link to="/" className="btn linkNav btn-outline-light">
-              Home
-            </Link>
-          </div>
-        </>
+      <>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+          }}
+          className="col-md-6"
+        >
+          <Link to="/">
+            <img src={logo} className="my-3" alt="Logo" />
+          </Link>
+          {errorMessage && <div className="text-danger">{errorMessage}</div>}
+          {message && <div className="text-success">{message}</div>}
+          <form onSubmit={formik.handleSubmit} className="w-75">
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                New Password
+              </label>
+              <input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                type="password"
+                id="password"
+                placeholder="Enter your new password"
+                className="form-control"
+              />
+              {formik.errors.password && formik.touched.password ? (
+                <div className="text-danger">{formik.errors.password}</div>
+              ) : null}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">
+                Confirm Password
+              </label>
+              <input
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.confirmPassword}
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm your new password"
+                className="form-control"
+              />
+              {formik.errors.confirmPassword &&
+              formik.touched.confirmPassword ? (
+                <div className="text-danger">
+                  {formik.errors.confirmPassword}
+                </div>
+              ) : null}
+            </div>
+            <button type="submit" className="form-button" disabled={loading}>
+              {loading ? <Spinner /> : "Reset Password"}
+            </button>
+          </form>
+        </motion.div>
+        <motion.div
+          initialValuesinitial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, x: 20 },
+            visible: {
+              opacity: 1,
+              x: 0,
+              transition: { duration: 0.5, delay: 0.3 },
+            },
+          }}
+          className="bg-warning col-md-6"
+        >
+          <h2>Reset Password</h2>
+          <h3>Enter your new password</h3>
+          <p>
+            Geno<span>V</span>
+          </p>
+          <Link to="/" className="btn linkNav btn-outline-light">
+            Home
+          </Link>
+        </motion.div>
+      </>
     );
   else return <Navigate to="/" />;
 }

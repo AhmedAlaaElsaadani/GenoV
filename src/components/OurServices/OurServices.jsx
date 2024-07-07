@@ -1,37 +1,250 @@
-import React from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CommonBackground from "../CommonBackgroundLayer/CommonBackground";
 import MoleculeViewer from "../3dModalViewer/MoleculeViewer";
 import style from "./OurServices.module.css";
 import ChartView from "../ChartViewer/ChartView";
+import { Link, useLocation } from "react-router-dom";
+import Spinner from "../../miniComponent/Spinner/Spinner";
+import { useFormik } from "formik";
+import ApiManager from "../../Utilies/ApiManager";
+import { authContext } from "../../Context/authContext";
 export default function OurServices() {
-  const modelData = `
-  ATOM      1  N   ASP A   1      38.928  46.332  10.889  1.00  0.00           N  
-  ATOM      2  CA  ASP A   1      39.292  47.723  10.476  1.00  0.00           C  
-  ATOM      3  C   ASP A   1      40.791  47.921  10.306  1.00  0.00           C  
-  ATOM      4  O   ASP A   1      41.041  48.805   9.478  1.00  0.00           O  
-  ATOM      5  CB  ASP A   1      38.495  48.722  11.354  1.00  0.00           C  
-  ATOM      6  CG  ASP A   1      37.077  48.264  11.703  1.00  0.00           C  
-  ATOM      7  OD1 ASP A   1      36.145  48.098  10.902  1.00  0.00           O  
-  ATOM      8  OD2 ASP A   1      36.937  48.093  12.932  1.00  0.00           O  
-  TER       9      ASP A   1                                                      
-  END
-  `;
+  const [aminoAcidArray, setAminoAcidArray] = useState(null);
+  const [response, setResponse] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [isChainSelector, setIsChainSelector] = useState(false);
+  const chainSelector = useRef(null);
+  const[aminoAcidNames,setAminoAcidNames ]=useState(null); 
+  const[ratios,setRatios ]=useState(null); 
+  const[bindingSites,setBindingSites ]=useState(null); 
   
   
-  const labels = ['P', 'A', 'A', 'K', 'S', 'I', 'V', 'T', 'L', 'D', 'V', 'K', 'P', 'W', 'D','P', 'A', 'A', 'K', 'S', 'I', 'V', 'T', 'L', 'D', 'V', 'K', 'P', 'W', 'D','P', 'A', 'A', 'K', 'S', 'I', 'V', 'T', 'L', 'D', 'V', 'K', 'P', 'W', 'D'];
-  const data = [0.28473333, 0.25680953, 0.3012256 , 0.2831465 , 0.21460417, 0.33297437, 0.24852641, 0.22674814, 0.15924256, 0.13744381, 0.22817993, 0.21480155, 0.08752055, 0.29654038, 0.24576497,0.28473333, 0.25680953, 0.3012256 , 0.2831465 , 0.21460417, 0.33297437, 0.24852641, 0.22674814, 0.15924256, 0.13744381, 0.22817993, 0.21480155, 0.08752055, 0.29654038, 0.24576497,0.28473333, 0.25680953, 0.3012256 , 0.2831465 , 0.21460417, 0.33297437, 0.24852641, 0.22674814, 0.15924256, 0.13744381, 0.22817993, 0.21480155, 0.08752055, 0.29654038, 0.24576497];
-  const bindingSites = [1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0,1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0];
+  const [chainId, setChainId] = useState(null);
+  let { token,isRegistered } = useContext(authContext);
+  function extractData(aminoAcidArray) {
+    const aminoAcidNames = [];
+    const ratios = [];
+    const bindingSites = [];
+
+    aminoAcidArray.forEach((item) => {
+      aminoAcidNames.push(item.aminoAcidName);
+      ratios.push(parseFloat(item.ratio));
+      bindingSites.push(parseInt(item.isBindingSite));
+    });
+    return { aminoAcidNames, ratios, bindingSites };
+  }
+
+const location = useLocation();
+  useEffect(() => {
+    if(location.state){
+      const {proteinId,chainId} = location.state;
+      formikObject.setFieldValue("searchProtein", proteinId);
+      formikObject.setFieldValue("chainId", chainId);
+      setChainId(chainId);
+      useModel(proteinId, chainId);
+    }
+  
+  }, [])
+  
+
+  const search = async (values) => {
+    setLoading(true);
+    if (!chainId) {
+      await getChinaData(values.searchProtein).then((res) => {
+        setLoading(false);
+      });
+    } else {
+      await useModel(values.searchProtein, values.chainId).then((res) => {
+        setLoading(false);
+      });
+    }
+  };
+  const useModel = async (proteinId, chainId) => {
+    try {
+      let { data } = await ApiManager.useModel(proteinId, chainId, token);
+      if (data && data.bindingSites) {
+        let dataExtracted = extractData(
+          data.bindingSites
+        );
+        setAminoAcidNames (dataExtracted.aminoAcidNames);
+        setRatios (dataExtracted.ratios);
+        setBindingSites (dataExtracted.bindingSites);
+        setAminoAcidArray(data.bindingSites);
+
+        setResponse(data);
+      }
+    } catch (error) {
+      let { data } = error.response;
+      if (data?.code == 404)
+        formikObject.setFieldError(
+          "chainId",
+          "we are sorry this chain id is not found in our date base we will add it through 24h "
+        );
+    }
+    return true;
+  };
+  const formikObject = useFormik({
+    initialValues: {
+      searchProtein: "",
+      chainId: "",
+    },
+    onSubmit: search,
+  });
+  const getChinaData = async (proteinId) => {
+    try {
+      let { data } = await ApiManager.getChain(proteinId);
+      if (data && data.chainIdentifiersList) {
+        // add option in chain selector
+        setIsChainSelector(true);
+        if (data?.chainIdentifiersList?.length > 0) {
+          setChainId(data.chainIdentifiersList[0]);
+          formikObject.setFieldValue("chainId", data.chainIdentifiersList[0]);
+        }
+        data.chainIdentifiersList.forEach((chain) => {
+          let option = document.createElement("option");
+          option.value = chain;
+          option.text = chain;
+
+          chainSelector.current.appendChild(option);
+        });
+      }
+    } catch (error) {
+      let { data } = error.response;
+      if (data?.code == 404)
+        formikObject.setFieldError("searchProtein", data.message);
+    }
+    return true;
+  };
+  // change the navbar style when the user clicks on the PreCalc link
+  const changeNavbarStyle = () => {
+    document
+      .getElementById("ourServices")
+      .classList.remove("selectedNavElement");
+    document.getElementById("PreCalc").classList.add("selectedNavElement");
+  };
+  // handle change and blur in the search input to clear the chain selector and set the chain id to null
+  const handleChangeAndBlurInSearchInput = () => {
+    // clear chainSelector except first option which is the default
+    if (isChainSelector) {
+      clearChainSelector();
+    }
+    setIsChainSelector(false);
+    setChainId(null);
+    formikObject.setFieldValue("chainId", "");
+  };
+  const clearChainSelector = () => {
+    while (chainSelector.current.length > 1) {
+      chainSelector.current.removeChild(chainSelector.current.lastChild);
+    }
+  };
   return (
     <CommonBackground>
       <section className={style.OurServices + " container "}>
-        <div className="row">
-      <ChartView labels={labels} data={data} bindingSites={bindingSites} />
+        <form
+          onSubmit={formikObject.handleSubmit}
+          className={"row w-75 " + style["input-container"]}
+        >
+          <div className="col-sm-12">
+            <label htmlFor="searchProtein">
+              Please insert PDB ID and chain identifier
+            </label>
+            <input
+              type="text"
+              id="searchProtein"
+              value={formikObject.values.searchProtein}
+              onChange={(e) => {
+                handleChangeAndBlurInSearchInput();
+                formikObject.handleChange(e);
+              }}
+              onBlur={formikObject.handleBlur}
+              placeholder="Search for a protein"
+              aria-label="Search for a protein"
+              aria-describedby="button-addon2"
+            />
+            {formikObject.errors.searchProtein &&
+              formikObject.touched.searchProtein && (
+                <div className="text-danger text-center">
+                  {formikObject.errors.searchProtein}
+                </div>
+              )}
+          </div>
+          {
+            <div
+              className="col-12 text-center"
+              style={{ display: isChainSelector ? "block" : "none" }}
+            >
+              <label htmlFor="options"> Now Choose Chain Id</label>
+              <div className={style["selector-container"] + " mt-0"}>
+                <select
+                  disabled={!isChainSelector}
+                  id="options"
+                  className={style["selector"]}
+                  ref={chainSelector}
+                  value={formikObject.values.chainId}
+                  onChange={(e) => {
+                    formikObject.setFieldValue("chainId", e.target.value);
+                    setChainId(e.target.value);
+                  }}
+                  onBlur={formikObject.handleBlur}
+                >
+                  <option disabled selected>
+                    Choose Chain Id{" "}
+                  </option>
+                </select>
 
-        <div className="col-sm-12 my-5">
-            <MoleculeViewer modelData={modelData} />
-        </div>
-        </div>
-
+                {formikObject.errors.chainId &&
+                  formikObject.touched.chainId && (
+                    <div className="text-danger text-center">
+                      {formikObject.errors.chainId}
+                    </div>
+                  )}
+              </div>
+            </div>
+          }
+          <div className="col-12 text-center my-4">
+            
+            {isRegistered?<button type="submit" disabled={loading} id="button-addon2">
+              {loading ? <Spinner /> : "Search"}
+            </button>:
+            <Link
+            to={"/accounts/login"}
+            className={style.link}
+          >
+            Search
+          </Link>
+        
+            }
+            <Link
+              to={"/precalc"}
+              onClick={changeNavbarStyle}
+              className={style.link}
+            >
+              Pre Calc
+            </Link>
+          </div>
+        </form>
+        {aminoAcidArray && (
+          <div className="row w-75">
+            <div className="col-sm-12 my-5">
+              <h3> Protein binding site prediction using local features</h3>
+              <p>PDB ID: {response.pdbId}</p>
+            </div>
+            {
+              aminoAcidArray && (
+                <div className="col-sm-12 my-5">
+                  <MoleculeViewer aminoAcidPdb={JSON.parse( response.chainAtoms)["chain_atoms"]} />
+                </div>
+              )
+            }
+           {
+              aminoAcidNames && ratios && bindingSites && (
+                <div className="col-sm-12 my-5">
+                  <ChartView labels={aminoAcidNames} data={ratios} bindingSites={bindingSites} />
+                </div>
+              )
+           }
+          </div>
+        )}
       </section>
     </CommonBackground>
   );

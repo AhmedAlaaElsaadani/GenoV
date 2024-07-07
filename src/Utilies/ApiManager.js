@@ -1,6 +1,5 @@
 import axios from "axios";
 import { HfInference } from "@huggingface/inference";
-
 const baseUrl = "https://ppi.izitechs.com";
 const inference = new HfInference("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");
 export default class ApiManager {
@@ -246,5 +245,31 @@ export default class ApiManager {
       console.error("Error fetching chat completion:", error);
       return "Sorry, I couldn't process your request.";
     }
+  }
+  /**
+   * get Chain for protein id
+   * @param {string} proteinId
+   * @returns {object} response
+   */
+  static async getChain(proteinId) {
+    let axiosResult = await axios.get(baseUrl + `/Protien/GetProteinChainIdentifiers/${proteinId}`);
+    console.log(axiosResult);
+    return axiosResult;
+  }
+  /**
+   * use model to predict binding site
+   * @param {object} data
+   * @returns {object} response
+   * 
+   */
+  static async useModel(proteinId, chainId, token) {
+    let axiosResult = await axios.post(baseUrl + `/search?PId=${proteinId}&ChainId=${chainId}`, {},{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    
+    });
+    console.log(axiosResult);
+    return axiosResult;
   }
 }

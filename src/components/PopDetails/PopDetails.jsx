@@ -27,7 +27,13 @@ export default function PopDetails({ setIsPopDetailsOpen, protein }) {
       setIsPopDetailsOpen(false);
     }
   };
-
+// change the navbar style when the user clicks on the more details button
+const changeNavbarStyle = () => {
+  document
+    .getElementById("ourServices")
+    .classList.add("selectedNavElement");
+  document.getElementById("PreCalc").classList.remove("selectedNavElement");
+};
   return (
     <div className={style.layer} onClick={closePopUp}>
       {" "}
@@ -57,11 +63,14 @@ export default function PopDetails({ setIsPopDetailsOpen, protein }) {
         </div>
         {
             isRegistered ? (
-              <Link to="/precalc" className={style["link"]}>
+              <Link to="/ourServices" onClick={changeNavbarStyle} state={{
+                proteinId: protein.pdbId,
+                chainId: protein.chainId,
+              }}  className={style["link"]}>
                 More Details
               </Link>
             ) : (
-              <Link to="/forms/login" className={style["link"]}>
+              <Link to="/accounts/login" className={style["link"]}>
                 More Details
               </Link>
             )

@@ -6,6 +6,7 @@ import logo from "../../assets/Images/Logo.png";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import { authContext } from "../../Context/authContext";
 import ApiManager from "../../Utilies/ApiManager";
+import { motion } from "framer-motion";
 
 export default function Register() {
   const validationSchema = Yup.object().shape({
@@ -80,7 +81,15 @@ export default function Register() {
   });
   return (
     <>
-      <div className=" col-md-7">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, x: -20 },
+          visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+        }}
+        className=" col-md-7"
+      >
         <Link to="/">
           <img src={logo} className="my-3" alt="Logo" />
         </Link>
@@ -207,9 +216,21 @@ export default function Register() {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
 
-      <div className="bg-warning col-md-5 ">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, x: 20 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.5, delay: 0.3 },
+          },
+        }}
+        className="bg-warning col-md-5 "
+      >
         <h2>Sign UP</h2>
         <h3> Welcome to join us in </h3>
         <p>
@@ -223,7 +244,7 @@ export default function Register() {
             Home
           </Link>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

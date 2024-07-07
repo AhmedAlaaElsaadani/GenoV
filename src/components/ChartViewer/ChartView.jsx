@@ -80,7 +80,7 @@ const ChartView = ({ labels, data, bindingSites }) => {
 
   return (
     <div 
-    className={style["chart-container"]}>
+    className={style["chart-container"]+" mb-5"}>
       <div
         style={{
           width: `${labels.length * 50}px`, // Adjust this value to control the width of each bar

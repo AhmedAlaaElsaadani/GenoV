@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import logo from "../../assets/Images/Logo.png";
 import ApiManager from "../../Utilies/ApiManager";
+import { motion } from "framer-motion";
 
 export default function ForgetPasswordOtpConfirm() {
   const [loading, setLoading] = useState(false);
@@ -118,7 +119,15 @@ export default function ForgetPasswordOtpConfirm() {
   if (email) {
     return (
       <>
-        <div className=" col-md-6">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+          }}
+          className=" col-md-6"
+        >
           <Link to="/">
             <img src={logo} className="my-3" alt="Logo" />
           </Link>
@@ -161,8 +170,20 @@ export default function ForgetPasswordOtpConfirm() {
               <span>Please wait {countdown} seconds to resend</span>
             )}
           </div>
-        </div>
-        <div className="bg-warning  col-md-6">
+        </motion.div>
+        <motion.div
+          initialValuesinitial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0, x: 20 },
+            visible: {
+              opacity: 1,
+              x: 0,
+              transition: { duration: 0.5, delay: 0.3 },
+            },
+          }}
+          className="bg-warning  col-md-6"
+        >
           <h2>Support</h2>
           <h3>Welcome to Support of</h3>
           <p>
@@ -171,7 +192,7 @@ export default function ForgetPasswordOtpConfirm() {
           <Link to="/" className="btn btn-outline-light">
             Return Back To Home
           </Link>
-        </div>
+        </motion.div>
       </>
     );
   } else {

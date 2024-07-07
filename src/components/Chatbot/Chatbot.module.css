@@ -116,6 +116,7 @@
 }
 .chat-send-button:disabled {
   color: #999;
+  cursor: wait;
 }
 
 /* responsive */

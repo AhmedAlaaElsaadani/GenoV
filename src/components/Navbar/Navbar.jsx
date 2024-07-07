@@ -159,6 +159,7 @@ const Navbar = () => {
                 <Link
                   className="nav-link active"
                   aria_current="PreCalc"
+                  id="PreCalc"
                   onClick={(e) => changeStyleClassFotNavItem(e)}
                   to="/PreCalc"
                 >

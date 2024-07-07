@@ -1,4 +1,185 @@
 .OurServices {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px; /* Added padding for better spacing on small screens */
+}
+
+.OurServices label {
+  color: var(--whiteToBlack);
+  text-align: center;
+  font-family: "Bauhaus Std";
+  font-size: 2rem; /* Changed from 35px to 2rem for better responsiveness */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 20px 0;
+}
+
+.OurServices input {
+  width: 100%;
+  color: var(--whiteToBlack);
+  border-radius: 10px;
+  background: rgba(148, 148, 148, 0.75);
+  padding: 10px 11px;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.OurServices input:focus {
+  background: rgba(148, 148, 148, 0.5);
+  border: 2px solid var(--blackToWhite);
+}
+
+.OurServices input::placeholder {
+  color: var(--blackToWhite);
+  font-family: "Bauhaus Std";
+  font-size: 1.25rem; /* Changed from 20px to 1.25rem for better responsiveness */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.OurServices button,
+.link {
+  text-decoration: none;
+  font-size: 1.5rem; /* Changed from 30px to 1.875rem for better responsiveness */
+  border-radius: 10px;
+  background: var(--span-color);
+  margin: 10px;
+  color: var(--whiteToBlack);
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.OurServices .link{
+  padding: 10px 20px;
+}
+
+.OurServices button:hover,
+.link:hover {
+  background: #a4471f;
+}
+
+.OurServices button:active,
+.link:active {
+  transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  -o-transform: scale(0.9);
+}
+
+.OurServices button:disabled {
+  background: var(--disabled-color);
+  cursor: wait;
+}
+
+.selector-container {
+  margin: 20px;
+}
+
+.selector {
+  padding: 10px;
+  font-size: 1rem; /* Changed from 16px to 1rem for better responsiveness */
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  width: 100%; /* Changed to 100% for better responsiveness */
+  max-width: 220px; /* Added max-width to limit width on larger screens */
+  background-color: var(--form-bg-updateProfile);
+  color: var(--whiteToBlack);
+}
+
+.selector option {
+  padding: 10px;
+  font-size: 1rem; /* Changed from 16px to 1rem for better responsiveness */
+  background-color: var(--table-background);
+  color: var(--whiteToBlack);
+}
+
+.OurServices h3 {
+  color: #FFF;
+  text-align: center;
+  font-family: "Bauhaus Std";
+  font-size: 2.5rem; /* Changed from 40px to 2.5rem for better responsiveness */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.OurServices p {
+  color: #F4682D;
+  font-family: "Bauhaus Std";
+  font-size: 2.25rem; /* Changed from 36px to 2.25rem for better responsiveness */
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: center;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .OurServices label {
+    font-size: 1.75rem; 
+  }
+
+  .OurServices input::placeholder {
+    font-size: 1rem; 
+  }
+
+  .OurServices button,
+  .link {
+    font-size: 1.5rem; 
+  }
+  
+  .OurServices h3 {
+    font-size: 2rem; 
+  }
+
+  .OurServices p {
+    font-size: 1.75rem; 
+  }
+}
+
+@media (max-width: 480px) {
+  .OurServices label {
+    font-size: 1.5rem; 
+  }
+
+  .OurServices input::placeholder {
+    font-size: 0.875rem; 
+  }
+    .OurServices button,
+    .link {
+      font-size: 1.25rem;
+      width: 80%; 
+    }
+
+  .link{
+    padding: 5px 10px;
+  }
+
+  .OurServices h3 {
+    font-size: 1.75rem; 
+  }
+
+  .OurServices p {
+    font-size: 1.5rem; 
+  }
 }

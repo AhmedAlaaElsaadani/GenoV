@@ -3,25 +3,24 @@ import React, { useEffect, useRef } from "react";
 import * as $3Dmol from "3dmol";
 import style from "./MoleculeViewer.module.css";
 
-const MoleculeViewer = ({ modelData }) => {
+const MoleculeViewer = ({ aminoAcidPdb }) => {
   const viewerRef = useRef(null);
-
+  // screenshot the 3d model 
   useEffect(() => {
+    console.log(aminoAcidPdb);
     if (viewerRef.current) {
       const element = viewerRef.current;
       const config = { backgroundColor: "gray" };
       const viewer = $3Dmol.createViewer(element, config);
-      viewer.addModel(modelData, "pdb"); // assuming modelData is in PDB format
+      viewer.addModel(aminoAcidPdb, "pdb"); 
       viewer.setStyle({}, { stick: {} });
       viewer.zoomTo();
       viewer.render();
-      viewer.zoom(3, 500);
-
-      // Save the viewer instance for later use
+      viewer.zoom(1.5, 500);
       viewerRef.current.viewer = viewer;
     }
-  }, [modelData]);
-
+  }, [aminoAcidPdb]);
+// take a screenshot of the 3d model
   const takeScreenshot = () => {
     const viewer = viewerRef.current.viewer;
     if (viewer) {

@@ -1,22 +1,33 @@
 import React from "react";
+import { motion } from "framer-motion";
 import style from "./Docs.module.css";
 import CommonBackground from "../CommonBackgroundLayer/CommonBackground.jsx";
-import DocsImage from "../../assets/Images/Docs.png"
+import DocsImage from "../../assets/Images/Docs.png";
 
 export default function Docs() {
   return (
     <CommonBackground>
-    <section className={style.Docs}>
+      <section className={style.Docs}>
         <div className="container g-2">
-          <div className="row ">
-            <div className={style.image+" col-lg-6"}>
+          <div className="row">
+            <motion.div
+              className={style.image + " col-lg-6"}
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+            >
               <img
                 src={DocsImage}
                 className="w-100 h-100"
-                alt="cartoon scientist Image "
+                alt="cartoon scientist Image"
               />
-            </div>
-            <div className={"col-lg-6 "+style.text}>
+            </motion.div>
+            <motion.div
+              className={"col-lg-6 " + style.text}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1 }}
+            >
               <div className={style.bgText}>
                 <p>
                   Proteins are complex bio-molecules, carry diverse cellular
@@ -39,10 +50,10 @@ export default function Docs() {
                   handling this problem.
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
-    </section>
+      </section>
     </CommonBackground>
   );
 }

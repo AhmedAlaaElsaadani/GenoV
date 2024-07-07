@@ -5,6 +5,7 @@ import { authContext } from "../../Context/authContext";
 import logo from "../../assets/Images/Logo.png";
 import Spinner from "../../miniComponent/Spinner/Spinner";
 import ApiManager from "../../Utilies/ApiManager";
+import { motion } from "framer-motion";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -47,14 +48,14 @@ export default function Login() {
       let { data } = await ApiManager.logIn(user);
       if (data.token) {
         //success
-        setToken(data.token);
-        setErrorMessage("");
         setSuccessMes("Welcome Back");
+        setErrorMessage("");
         localStorage.setItem("token", data.token);
 
         setTimeout(() => {
+          setToken(data.token);
           navigator("/");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
@@ -77,7 +78,15 @@ export default function Login() {
   });
   return (
     <>
-      <div className=" col-md-6 ">
+      <motion.div
+        className=" col-md-6 "
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, x: -20 },
+          visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+        }}
+      >
         <Link to="/">
           <img src={logo} className="my-3" alt="Logo" />
         </Link>
@@ -133,7 +142,7 @@ export default function Login() {
             />
           </div>
           <button disabled={loading} type="submit" className="form-button">
-            {loading ? <Spinner /> : "Submit Message"}
+            {loading ? <Spinner /> : "Log in"}
           </button>
           <div className="w-100 d-flex justify-content-center mt-1  ">
             <Link to="/accounts/ForgetPasswordSendEmail" className="text-light">
@@ -141,9 +150,21 @@ export default function Login() {
             </Link>
           </div>
         </form>
-      </div>
+      </motion.div>
 
-      <div className="bg-warning  col-md-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: { opacity: 0, x: 20 },
+          visible: {
+            opacity: 1,
+            x: 0,
+            transition: { duration: 0.5, delay: 0.3 },
+          },
+        }}
+        className="bg-warning  col-md-6"
+      >
         <h2>Sign In</h2>
         <h3>Welcome back Researcher</h3>
         <p>
@@ -157,7 +178,7 @@ export default function Login() {
             Home{" "}
           </Link>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
