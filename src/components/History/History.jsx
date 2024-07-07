@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import CommonBackground from "../CommonBackgroundLayer/CommonBackground.jsx";
-import style from "./PreCalc.module.css";
+import style from "./History.module.css";
 import ApiManager from "../../Utilies/ApiManager.js";
 import PopDetails from "../PopDetails/PopDetails.jsx";
 import { useFormik } from "formik";
 import Spinner from "../../miniComponent/Spinner/Spinner.jsx";
+import { authContext } from "../../Context/authContext.jsx";
 
-export default function PreCalc() {
+export default function History() {
   const [proteinArray, setProteinArray] = useState([]);
   const [isPopDetailsOpen, setIsPopDetailsOpen] = useState(false);
   const [chosenProteinIndex, setChosenProteinIndex] = useState(null);
@@ -16,21 +17,21 @@ export default function PreCalc() {
   const [pageSize] = useState(10); // Fixed page size
   const [totalCount, setTotalCount] = useState(0);
   const chainInput = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [isLoading, setIsLoading] = useState(true)
+    const { token } = useContext(authContext);
   // get data from api
   const getData = async (reset = false) => {
     setIsLoading(true);
     try {
-      let { data } = await ApiManager.getPreCalc(
+      let { data } = await ApiManager.getHistory(
         `PageIndex=${reset ? 1 : pageIndex}&PageSize=${pageSize}&ChainId=${
           chainId == null ? "" : chainId
         }&PId=${proteinId == null ? "" : proteinId}`
-      );
+      ,token );
       setProteinArray(reset ? data.data : [...proteinArray, ...data.data]);
       setTotalCount(data.count);
-      if (reset) setPageIndex(2);
-      else setPageIndex(pageIndex + 1);
+      if (reset) setPageIndex(2); 
+      else setPageIndex(pageIndex + 1); 
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -46,8 +47,10 @@ export default function PreCalc() {
 
   // get data on component mount
   useEffect(() => {
+    if(token)
     getData(true);
-  }, []);
+
+  }, [token]);
 
   // search using Api
   const search = async () => {
@@ -68,7 +71,7 @@ export default function PreCalc() {
 
   return (
     <CommonBackground>
-      <section className={style.PreCalc + " mt-3 w-100 pb-5 position-relative"}>
+      <section className={style.History + " mt-3 w-100 pb-5 position-relative"}>
         <div className={"container rounded-3 overflow-auto " + style.bg}>
           <form onSubmit={formObject.handleSubmit} className="row my-4 ">
             <div className="col-sm-12 m-auto position-relative d-flex">
@@ -188,17 +191,16 @@ export default function PreCalc() {
                         No Data Found
                       </td>
                     </tr>
-                  )}
-                </tbody>
+                  )}</tbody>
               </table>
-              {proteinArray.length < totalCount && (
+              {proteinArray.length < totalCount &&proteinArray.length>0 && (
                 <div className="d-flex justify-content-center my-2 ">
                   <button
                     className="btn btn-warning text-white"
                     onClick={() => getData()}
                     disabled={isLoading}
                   >
-                    {isLoading ? <Spinner /> : "Load More"}
+                    {isLoading ? <Spinner/> : "Load More"}
                   </button>
                 </div>
               )}

@@ -7,7 +7,6 @@ const MoleculeViewer = ({ aminoAcidPdb }) => {
   const viewerRef = useRef(null);
   // screenshot the 3d model 
   useEffect(() => {
-    console.log(aminoAcidPdb);
     if (viewerRef.current) {
       const element = viewerRef.current;
       const config = { backgroundColor: "gray" };

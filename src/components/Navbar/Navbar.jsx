@@ -78,7 +78,7 @@ const Navbar = () => {
   useEffect(() => {
     if (window.innerWidth > 1024) {
       setHomeFlag(
-        location.pathname[1] === undefined || location.pathname[1] === "H"
+        location.pathname[1] === undefined || (location.pathname[1] === "H"&& location.pathname[2] === "o")
       );
     }
   }, [location.pathname]);
@@ -166,6 +166,19 @@ const Navbar = () => {
                   Pre-Calc
                 </Link>
               </li>
+              {isRegistered && (
+                <li className="nav-item ">
+                  <Link
+                    className="nav-link active"
+                    aria_current="History"
+                    id="History"
+                    onClick={(e) => changeStyleClassFotNavItem(e)}
+                    to="/History"
+                  >
+                    History{" "}
+                  </Link>
+                </li>
+              )}
               <li className="nav-item ">
                 <Link
                   className="nav-link active"
@@ -212,7 +225,6 @@ const Navbar = () => {
                           d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                         />
                       </svg>
-                      {console.log(user, " ", user?.emailConfirmed)}
                       {user?.emailConfirmed ||
                       user?.emailConfirmed == undefined ? null : (
                         <span className="position-absolute end-0 bottom-0 translate-middle p-2 bg-danger border border-light rounded-circle">

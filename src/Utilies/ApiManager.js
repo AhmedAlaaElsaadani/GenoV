@@ -102,7 +102,7 @@ export default class ApiManager {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    console.log("HI");
+
     let axiosResult = await axios.put(
       baseUrl + "/accounts/updatecurrent",
       user,
@@ -133,7 +133,7 @@ export default class ApiManager {
     let axiosResult = await axios.get(
       baseUrl + `/accounts/validateToken?token=${token}`
     );
-    console.log(axiosResult);
+
     return axiosResult;
   }
   /**
@@ -146,7 +146,7 @@ export default class ApiManager {
     let axiosResult = await axios.post(
       baseUrl + `/accounts/SendOTPResetPassword?email=${email}`
     );
-    console.log(axiosResult);
+
     return axiosResult;
   }
   /**
@@ -159,7 +159,7 @@ export default class ApiManager {
     let axiosResult = await axios.post(
       baseUrl + `/accounts/ConfirmResetPasswordOTP?OTP=${otp}&email=${email}`
     );
-    console.log(axiosResult);
+
     return axiosResult;
   }
   /**
@@ -178,7 +178,7 @@ export default class ApiManager {
       baseUrl + `/accounts/ResetPassword`,
       data
     );
-    console.log(axiosResult);
+
     return axiosResult;
   }
   // services Api <-- getPreCalc--> <-- search -->  <-- useModel --> <-- contactUs -->
@@ -190,7 +190,20 @@ export default class ApiManager {
     let axiosResult = await axios.get(
       baseUrl + "/search/precalculated?" + param
     );
-    console.log(axiosResult);
+
+    return axiosResult;
+  }
+  /**
+   * get History
+   * @returns {object} response
+   */
+  static async getHistory(param, token) {
+    let axiosResult = await axios.get(baseUrl + "/search/history?" + param, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return axiosResult;
   }
   /**
@@ -202,7 +215,7 @@ export default class ApiManager {
     let axiosResult = await axios.post(
       baseUrl + `/search?${param}&ignore=true`
     );
-    console.log(axiosResult);
+
     return axiosResult;
   }
 
@@ -219,7 +232,7 @@ export default class ApiManager {
       },
     };
     let axiosResult = await axios.post(baseUrl + "/contact", data, config);
-    console.log(axiosResult);
+
     return axiosResult;
   }
 
@@ -252,24 +265,50 @@ export default class ApiManager {
    * @returns {object} response
    */
   static async getChain(proteinId) {
-    let axiosResult = await axios.get(baseUrl + `/Protien/GetProteinChainIdentifiers/${proteinId}`);
-    console.log(axiosResult);
+    let axiosResult = await axios.get(
+      baseUrl + `/Protien/GetProteinChainIdentifiers/${proteinId}`
+    );
+
     return axiosResult;
   }
   /**
    * use model to predict binding site
    * @param {object} data
    * @returns {object} response
-   * 
+   *
    */
   static async useModel(proteinId, chainId, token) {
-    let axiosResult = await axios.post(baseUrl + `/search?PId=${proteinId}&ChainId=${chainId}`, {},{
-      headers: {
-        Authorization: `Bearer ${token}`,
+    let axiosResult = await axios.post(
+      baseUrl + `/search?PId=${proteinId}&ChainId=${chainId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return axiosResult;
+  }
+  /**
+   * get protein sequence 3d structure
+   * @param {string} proteinId
+   * @param {string} chainId
+   * @return {string}
+   */
+  static async getProteinStruct(proteinId, chainId) {
+    let axiosResult = await axios.post(
+      "https://ppi.izitechs.com/ppi-model/chain_atoms",
+      {
+        protein_id: proteinId,
+        chain_identifier: chainId,
       },
-    
-    });
-    console.log(axiosResult);
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return axiosResult;
   }
 }

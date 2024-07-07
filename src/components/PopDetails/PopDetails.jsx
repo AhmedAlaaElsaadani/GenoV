@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { authContext } from "../../Context/authContext";
 export default function PopDetails({ setIsPopDetailsOpen, protein }) {
   const popupRef = useRef(null);
-  const{isRegistered}=useContext(authContext);
+  const { isRegistered } = useContext(authContext);
 
   // Close the popup when the user presses the escape key
   useEffect(() => {
@@ -27,13 +27,13 @@ export default function PopDetails({ setIsPopDetailsOpen, protein }) {
       setIsPopDetailsOpen(false);
     }
   };
-// change the navbar style when the user clicks on the more details button
-const changeNavbarStyle = () => {
-  document
-    .getElementById("ourServices")
-    .classList.add("selectedNavElement");
-  document.getElementById("PreCalc").classList.remove("selectedNavElement");
-};
+  // change the navbar style when the user clicks on the more details button
+  const changeNavbarStyle = () => {
+    document.getElementById("ourServices").classList.add("selectedNavElement");
+    document.getElementById("PreCalc").classList.remove("selectedNavElement");
+    document.getElementById("History")?.classList?.remove("selectedNavElement");
+
+  };
   return (
     <div className={style.layer} onClick={closePopUp}>
       {" "}
@@ -46,6 +46,7 @@ const changeNavbarStyle = () => {
                 <th>Acid Name</th>
                 <th>Position</th>
                 <th>Ratio</th>
+                <th>Binding</th>
               </tr>
             </thead>
             <tbody>
@@ -55,26 +56,34 @@ const changeNavbarStyle = () => {
                     <td>{item.aminoAcidName}</td>
                     <td>{item.position}</td>
                     <td>{item.ratio}</td>
+                    <td
+                      className={
+                        item.isBindingSite ? "bg-success" : "bg-danger"
+                      }
+                    ></td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
         </div>
-        {
-            isRegistered ? (
-              <Link to="/ourServices" onClick={changeNavbarStyle} state={{
-                proteinId: protein.pdbId,
-                chainId: protein.chainId,
-              }}  className={style["link"]}>
-                More Details
-              </Link>
-            ) : (
-              <Link to="/accounts/login" className={style["link"]}>
-                More Details
-              </Link>
-            )
-        }
+        {isRegistered ? (
+          <Link
+            to="/ourServices"
+            onClick={changeNavbarStyle}
+            state={{
+              proteinId: protein.pdbId,
+              chainId: protein.chainId,
+            }}
+            className={style["link"]}
+          >
+            More Details
+          </Link>
+        ) : (
+          <Link to="/accounts/login" className={style["link"]}>
+            More Details
+          </Link>
+        )}
       </div>
       <button
         className={style["close-button"]}

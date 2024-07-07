@@ -14,13 +14,13 @@ export default function OurServices() {
   const [loading, setLoading] = useState(false);
   const [isChainSelector, setIsChainSelector] = useState(false);
   const chainSelector = useRef(null);
-  const[aminoAcidNames,setAminoAcidNames ]=useState(null); 
-  const[ratios,setRatios ]=useState(null); 
-  const[bindingSites,setBindingSites ]=useState(null); 
-  
-  
+  const [aminoAcidNames, setAminoAcidNames] = useState(null);
+  const [ratios, setRatios] = useState(null);
+  const [bindingSites, setBindingSites] = useState(null);
+  const [structure, setStructure] = useState(null)
+
   const [chainId, setChainId] = useState(null);
-  let { token,isRegistered } = useContext(authContext);
+  let { token, isRegistered } = useContext(authContext);
   function extractData(aminoAcidArray) {
     const aminoAcidNames = [];
     const ratios = [];
@@ -34,18 +34,18 @@ export default function OurServices() {
     return { aminoAcidNames, ratios, bindingSites };
   }
 
-const location = useLocation();
+  const location = useLocation();
   useEffect(() => {
-    if(location.state){
-      const {proteinId,chainId} = location.state;
+    if (location.state) {
+      const { proteinId, chainId } = location.state;
       formikObject.setFieldValue("searchProtein", proteinId);
       formikObject.setFieldValue("chainId", chainId);
-      setChainId(chainId);
+      getChinaData(proteinId);
       useModel(proteinId, chainId);
+      getProteinStruct(proteinId, chainId);
+
     }
-  
-  }, [])
-  
+  }, []);
 
   const search = async (values) => {
     setLoading(true);
@@ -59,17 +59,27 @@ const location = useLocation();
       });
     }
   };
+  const getProteinStruct = async (proteinId, chainId) => {
+    try {
+      let { data } = await ApiManager.getProteinStruct(proteinId, chainId);
+      if (data) {
+        setStructure(data["chain_atoms"]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const useModel = async (proteinId, chainId) => {
     try {
       let { data } = await ApiManager.useModel(proteinId, chainId, token);
+
       if (data && data.bindingSites) {
-        let dataExtracted = extractData(
-          data.bindingSites
-        );
-        setAminoAcidNames (dataExtracted.aminoAcidNames);
-        setRatios (dataExtracted.ratios);
-        setBindingSites (dataExtracted.bindingSites);
+        let dataExtracted = extractData(data.bindingSites);
+        setAminoAcidNames(dataExtracted.aminoAcidNames);
+        setRatios(dataExtracted.ratios);
+        setBindingSites(dataExtracted.bindingSites);
         setAminoAcidArray(data.bindingSites);
+        getProteinStruct(proteinId, chainId);
 
         setResponse(data);
       }
@@ -98,14 +108,25 @@ const location = useLocation();
         setIsChainSelector(true);
         if (data?.chainIdentifiersList?.length > 0) {
           setChainId(data.chainIdentifiersList[0]);
-          formikObject.setFieldValue("chainId", data.chainIdentifiersList[0]);
+          if (!location.state) {
+            formikObject.setFieldValue("chainId", data.chainIdentifiersList[0]);
+          }
         }
         data.chainIdentifiersList.forEach((chain) => {
-          let option = document.createElement("option");
-          option.value = chain;
-          option.text = chain;
+          // before append check if this option is already exist
+          let isExist = false;
+          chainSelector.current.childNodes.forEach((child) => {
+            if (child.value == chain) {
+              isExist = true;
+            }
+          });
+          if (!isExist) {
+            let option = document.createElement("option");
+            option.value = chain;
+            option.text = chain;
 
-          chainSelector.current.appendChild(option);
+            chainSelector.current.appendChild(option);
+          }
         });
       }
     } catch (error) {
@@ -202,18 +223,15 @@ const location = useLocation();
             </div>
           }
           <div className="col-12 text-center my-4">
-            
-            {isRegistered?<button type="submit" disabled={loading} id="button-addon2">
-              {loading ? <Spinner /> : "Search"}
-            </button>:
-            <Link
-            to={"/accounts/login"}
-            className={style.link}
-          >
-            Search
-          </Link>
-        
-            }
+            {isRegistered ? (
+              <button type="submit" disabled={loading} id="button-addon2">
+                {loading ? <Spinner /> : "Search"}
+              </button>
+            ) : (
+              <Link to={"/accounts/login"} className={style.link}>
+                Search
+              </Link>
+            )}
             <Link
               to={"/precalc"}
               onClick={changeNavbarStyle}
@@ -229,20 +247,27 @@ const location = useLocation();
               <h3> Protein binding site prediction using local features</h3>
               <p>PDB ID: {response.pdbId}</p>
             </div>
-            {
-              aminoAcidArray && (
-                <div className="col-sm-12 my-5">
-                  <MoleculeViewer aminoAcidPdb={JSON.parse( response.chainAtoms)["chain_atoms"]} />
-                </div>
-              )
-            }
-           {
-              aminoAcidNames && ratios && bindingSites && (
-                <div className="col-sm-12 my-5">
-                  <ChartView labels={aminoAcidNames} data={ratios} bindingSites={bindingSites} />
-                </div>
-              )
-           }
+            {console.log(
+              typeof response.chainAtoms,
+              typeof response.chainAtoms["chain_atoms"]
+            )}
+            {structure && (
+              <div className="col-sm-12 my-5">
+                <MoleculeViewer
+                  aminoAcidPdb={structure
+                  }
+                />
+              </div>
+            )}
+            {aminoAcidNames && ratios && bindingSites && (
+              <div className="col-sm-12 my-5">
+                <ChartView
+                  labels={aminoAcidNames}
+                  data={ratios}
+                  bindingSites={bindingSites}
+                />
+              </div>
+            )}
           </div>
         )}
       </section>

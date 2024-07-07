@@ -17,6 +17,7 @@ import ForgetPasswordSendEmail from "./components/ForgetPassword/ForgetPasswordS
 import ForgetPasswordOtpConfirm from "./components/ForgetPassword/ForgetPasswordOtpConfirm";
 import ForgetPasswordResetPassword from "./components/ForgetPassword/ForgetPasswordResetPassword";
 import ErrorComp from "./components/Error/ErrorComp";
+import History from "./components/History/History";
 
 function App() {
   let router = createBrowserRouter([
@@ -29,10 +30,11 @@ function App() {
         { path: "about", element: <About /> },
         { path: "Docs", element: <Docs /> },
         { path: "PreCalc", element: <PreCalc /> },
+        { path: "History", element: <History /> },
+
         { path: "OurServices", element: <OurServices /> },
       ],
-      errorElement: <ErrorComp/>,
-
+      errorElement: <ErrorComp />,
     },
     {
       path: "/accounts",
@@ -99,9 +101,8 @@ function App() {
           ),
         },
       ],
-      errorElement: <ErrorComp/>
+      errorElement: <ErrorComp />,
     },
-    
   ]);
 
   return (
