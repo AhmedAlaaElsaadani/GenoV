@@ -17,7 +17,7 @@ export default function OurServices() {
   const [aminoAcidNames, setAminoAcidNames] = useState(null);
   const [ratios, setRatios] = useState(null);
   const [bindingSites, setBindingSites] = useState(null);
-  const [structure, setStructure] = useState(null)
+  const [structure, setStructure] = useState(null);
 
   const [chainId, setChainId] = useState(null);
   let { token, isRegistered } = useContext(authContext);
@@ -42,8 +42,7 @@ export default function OurServices() {
       formikObject.setFieldValue("chainId", chainId);
       getChinaData(proteinId);
       useModel(proteinId, chainId);
-      getProteinStruct(proteinId, chainId);
-
+      // getProteinStruct(proteinId, chainId);
     }
   }, []);
 
@@ -74,14 +73,25 @@ export default function OurServices() {
       let { data } = await ApiManager.useModel(proteinId, chainId, token);
 
       if (data && data.bindingSites) {
+        console.log(data);
         let dataExtracted = extractData(data.bindingSites);
         setAminoAcidNames(dataExtracted.aminoAcidNames);
         setRatios(dataExtracted.ratios);
         setBindingSites(dataExtracted.bindingSites);
         setAminoAcidArray(data.bindingSites);
-        getProteinStruct(proteinId, chainId);
-
         setResponse(data);
+        
+        if (typeof (response.chainAtoms) == "string") {
+          console.log("Hi");
+          let chainAtoms = JSON.parse(response.chainAtoms);
+          console.log(chainAtoms);
+          console.log(chainAtoms["chain_atoms"]);
+          setStructure(chainAtoms["chain_atoms"]);
+
+         } //else setStructure(chainAtoms["chain_atoms"]);
+
+        // getProteinStruct(proteinId, chainId);
+
       }
     } catch (error) {
       let { data } = error.response;
@@ -124,7 +134,6 @@ export default function OurServices() {
             let option = document.createElement("option");
             option.value = chain;
             option.text = chain;
-
             chainSelector.current.appendChild(option);
           }
         });
@@ -222,7 +231,9 @@ export default function OurServices() {
               </div>
             </div>
           }
-          <div className="col-12 text-center my-4">
+          <div
+            className={"col-12 text-center my-4 " + style["button-container"]}
+          >
             {isRegistered ? (
               <button type="submit" disabled={loading} id="button-addon2">
                 {loading ? <Spinner /> : "Search"}
@@ -247,16 +258,9 @@ export default function OurServices() {
               <h3> Protein binding site prediction using local features</h3>
               <p>PDB ID: {response.pdbId}</p>
             </div>
-            {console.log(
-              typeof response.chainAtoms,
-              typeof response.chainAtoms["chain_atoms"]
-            )}
             {structure && (
               <div className="col-sm-12 my-5">
-                <MoleculeViewer
-                  aminoAcidPdb={structure
-                  }
-                />
+                <MoleculeViewer aminoAcidPdb={structure} />
               </div>
             )}
             {aminoAcidNames && ratios && bindingSites && (

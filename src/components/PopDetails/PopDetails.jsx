@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import style from "./PopDetails.module.css";
 import { Link } from "react-router-dom";
 import { authContext } from "../../Context/authContext";
+
 export default function PopDetails({ setIsPopDetailsOpen, protein }) {
   const popupRef = useRef(null);
   const { isRegistered } = useContext(authContext);
@@ -27,16 +28,45 @@ export default function PopDetails({ setIsPopDetailsOpen, protein }) {
       setIsPopDetailsOpen(false);
     }
   };
-  // change the navbar style when the user clicks on the more details button
+
+  // Change the navbar style when the user clicks on the more details button
   const changeNavbarStyle = () => {
     document.getElementById("ourServices").classList.add("selectedNavElement");
     document.getElementById("PreCalc").classList.remove("selectedNavElement");
     document.getElementById("History")?.classList?.remove("selectedNavElement");
-
   };
+
+  // Convert table data to CSV and trigger download
+  const downloadCSV = () => {
+    const rows = [["Acid Name", "Position", "Ratio", "Binding"]]; // Table headers
+
+    protein?.bindingSites?.forEach((item) => {
+      rows.push([
+        item.aminoAcidName,
+        item.position,
+        item.ratio,
+        item.isBindingSite ? "Yes" : "No",
+      ]);
+    });
+
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    rows.forEach((rowArray) => {
+      let row = rowArray.join(",");
+      csvContent += row + "\r\n";
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "protein_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className={style.layer} onClick={closePopUp}>
-      {" "}
       <div className={style.PopDetails} ref={popupRef}>
         <h3>Protein ID: {protein.pdbId}</h3>
         <div className={style["table-container"]}>
@@ -84,6 +114,10 @@ export default function PopDetails({ setIsPopDetailsOpen, protein }) {
             More Details
           </Link>
         )}
+        {/* Add the Download CSV button */}
+        <button onClick={downloadCSV} className={style["download-button"]}>
+          Download as CSV
+        </button>
       </div>
       <button
         className={style["close-button"]}

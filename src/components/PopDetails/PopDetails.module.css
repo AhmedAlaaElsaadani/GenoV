@@ -143,6 +143,26 @@
 .close-button:hover {
   background: darkred;
 }
+.download-button {
+  background-color: var(--secondary-color); 
+  color: #ffffff; 
+  border: none; 
+  padding: 10px 15px; 
+  margin-top: 20px; 
+  border-radius: 5px; 
+  font-size: 12px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
+}
+
+.download-button:hover {
+  background-color: var(--primary-color); 
+}
+
+.download-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+}
 
 /* 8. responsive */
 @media (max-width: 991px) {
@@ -193,6 +213,10 @@
     font-size: 1.2rem;
     padding: 6px 12px;
   }
+  .download-button {
+    font-size: 14px; /* Adjust font size for tablets */
+    padding: 8px 16px; /* Adjust padding for tablets */
+  }
 }
 
 @media (max-width: 576px) {
@@ -217,5 +241,9 @@
   .PopDetails .link {
     font-size: 1rem;
     padding: 4px 8px;
+  }
+  .download-button {
+    font-size: 12px; /* Adjust font size for mobile devices */
+    padding: 6px 12px; /* Adjust padding for mobile devices */
   }
 }

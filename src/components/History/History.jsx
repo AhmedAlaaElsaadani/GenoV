@@ -17,8 +17,8 @@ export default function History() {
   const [pageSize] = useState(10); // Fixed page size
   const [totalCount, setTotalCount] = useState(0);
   const chainInput = useRef(null);
-  const [isLoading, setIsLoading] = useState(true)
-    const { token } = useContext(authContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { token } = useContext(authContext);
   // get data from api
   const getData = async (reset = false) => {
     setIsLoading(true);
@@ -26,12 +26,13 @@ export default function History() {
       let { data } = await ApiManager.getHistory(
         `PageIndex=${reset ? 1 : pageIndex}&PageSize=${pageSize}&ChainId=${
           chainId == null ? "" : chainId
-        }&PId=${proteinId == null ? "" : proteinId}`
-      ,token );
+        }&PId=${proteinId == null ? "" : proteinId}`,
+        token
+      );
       setProteinArray(reset ? data.data : [...proteinArray, ...data.data]);
       setTotalCount(data.count);
-      if (reset) setPageIndex(2); 
-      else setPageIndex(pageIndex + 1); 
+      if (reset) setPageIndex(2);
+      else setPageIndex(pageIndex + 1);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -47,9 +48,7 @@ export default function History() {
 
   // get data on component mount
   useEffect(() => {
-    if(token)
-    getData(true);
-
+    if (token) getData(true);
   }, [token]);
 
   // search using Api
@@ -172,8 +171,14 @@ export default function History() {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>{protein.pdbId}</td>
-                        <td>{protein.chainId}</td>
-                        <td>{protein.bindingSites.length}</td>
+                        <td>{protein.chainId}</td>{" "}
+                        <td>
+                          {
+                            protein.bindingSites.filter(
+                              (ele) => ele.isBindingSite
+                            ).length
+                          }
+                        </td>
                         <td>{protein.noAminoAcids}</td>
                         <td>
                           <button
@@ -191,16 +196,17 @@ export default function History() {
                         No Data Found
                       </td>
                     </tr>
-                  )}</tbody>
+                  )}
+                </tbody>
               </table>
-              {proteinArray.length < totalCount &&proteinArray.length>0 && (
+              {proteinArray.length < totalCount && proteinArray.length > 0 && (
                 <div className="d-flex justify-content-center my-2 ">
                   <button
                     className="btn btn-warning text-white"
                     onClick={() => getData()}
                     disabled={isLoading}
                   >
-                    {isLoading ? <Spinner/> : "Load More"}
+                    {isLoading ? <Spinner /> : "Load More"}
                   </button>
                 </div>
               )}

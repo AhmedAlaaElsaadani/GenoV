@@ -170,7 +170,7 @@ export default function PreCalc() {
                         <td>{index + 1}</td>
                         <td>{protein.pdbId}</td>
                         <td>{protein.chainId}</td>
-                        <td>{protein.bindingSites.length}</td>
+                        <td>{(protein.bindingSites.filter(ele=>ele.isBindingSite)).length}</td>
                         <td>{protein.noAminoAcids}</td>
                         <td>
                           <button

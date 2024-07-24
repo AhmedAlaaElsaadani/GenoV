@@ -1,7 +1,7 @@
 import axios from "axios";
 import { HfInference } from "@huggingface/inference";
 const baseUrl = "https://ppi.izitechs.com";
-const inference = new HfInference("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");
+const inference = new HfInference("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");
 export default class ApiManager {
   // User Apia <-- Login, Register, Logout , Update Profile , Get Profile ,otpConfirm , ResendOtp , ForgotPassword , ResetPassword -->
   /**
