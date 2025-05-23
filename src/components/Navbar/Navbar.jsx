@@ -19,7 +19,7 @@ const Navbar = () => {
   const logOut = async () => {
     localStorage.removeItem("token");
     setToken(null);
-    let { data } = await ApiManager.logOut(token);
+     await ApiManager.logOut(token);
   };
   // specify style for nav item when refresh page
   const specifyStyleForNav = () => {
